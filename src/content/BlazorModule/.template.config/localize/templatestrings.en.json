@@ -1,0 +1,4 @@
+{
+  "name": "Blazor module (multi-project)",
+  "description": "Creates a modular Blazor building block with multiple projects, renaming 'ModuleName' and regenerating project GUIDs."
+}

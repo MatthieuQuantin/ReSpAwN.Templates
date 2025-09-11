@@ -1,0 +1,13 @@
+﻿//global using System.Net.Mail;
+//global using System.Reflection;
+//global using Ardalis.SharedKernel;
+//global using Ardalis.Specification.EntityFrameworkCore;
+//global using Microsoft.Data.SqlClient;
+//global using Microsoft.EntityFrameworkCore;
+//global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+//global using Microsoft.Extensions.DependencyInjection;
+//global using Microsoft.Extensions.Logging;
+global using Ardalis.Result;
+global using Ardalis.Result.FluentValidation;
+global using Ardalis.SharedKernel;
+global using FluentValidation;

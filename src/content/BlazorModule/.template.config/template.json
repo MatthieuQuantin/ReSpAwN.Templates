@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Matthieu QUANTIN",
+  "identity": "ReSpAwN.BlazorModule.Template",
+  "name": "Blazor module (multi-project)",
+  "shortName": "r-blazor-module",
+  "sourceName": "ModuleName",
+  "preferNameDirectory": true,
+  "defaultName": "MyModule",
+
+  "classifications": [
+    "Blazor",
+    ".NET 9",
+    "Modular"
+  ],
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            "**/[Bb]in/**",
+            "**/[Oo]bj/**",
+            "**/.git/**",
+            "**/.vs/**",
+            ".template.config/**",
+            "BlazorModule.sln"
+          ]
+        }
+      ]
+    }
+  ],
+
+  "guids": [
+    "3225040D-811D-4D91-80AE-087AA467C3CA",
+    "EB6096F7-C994-4D54-98D5-06D94CEBCE11",
+    "30784603-B832-4303-A7F7-A433671BC9CF",
+    "00850423-5AF7-49D1-B22C-EC1B4CBFC1BD",
+    "604790A1-CF5B-4E72-96F3-0DA9BCD5CEC9",
+    "CD7D85F9-705D-45AF-B94D-98147636E11F"
+  ],
+
+  "primaryOutputs": [
+    { "path": "ModuleName.Application/ModuleName.Application.csproj" },
+    { "path": "ModuleName.Domain/ModuleName.Domain.csproj" },
+    { "path": "ModuleName.Domain.Contracts/ModuleName.Domain.Contracts.csproj" },
+    { "path": "ModuleName.Infrastructure/ModuleName.Infrastructure.csproj" },
+    { "path": "ModuleName.Presentation/ModuleName.Presentation.csproj" },
+    { "path": "ModuleName.Tests/ModuleName.Tests.csproj" }
+  ]
+}
