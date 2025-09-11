@@ -16,11 +16,12 @@ namespace ModuleName.Infrastructure.Persistence
             // This allows for flexibility in how the DbContext is configured, such as in tests or different environments.
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(Constants.CONNECTION_STRING_NAME,
-                sqlServerOptionsBuilder =>
-                {
-                    sqlServerOptionsBuilder.MigrationsHistoryTable(Constants.DBCONTEXT_MIGRATIONS_HISTORY_TABLE_NAME, Constants.DBCONTEXT_SCHEMA_NAME);
-                });
+                optionsBuilder.UseSqlServer(
+                    $"Name=ConnectionStrings:{Constants.CONNECTION_STRING_NAME}",
+                    sqlServerOptionsBuilder =>
+                    {
+                        sqlServerOptionsBuilder.MigrationsHistoryTable(Constants.DBCONTEXT_MIGRATIONS_HISTORY_TABLE_NAME, Constants.DBCONTEXT_SCHEMA_NAME);
+                    });
             }
 
             base.OnConfiguring(optionsBuilder);
