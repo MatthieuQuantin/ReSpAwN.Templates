@@ -1,6 +1,6 @@
-#![ReSpAwN - Blazor Templates for .NET 9](banner.png)
+![ReSpAwN - Blazor Templates for .NET 9](banner.png)
 
-**EN** - Blazor templates (module + project) for .NET 9  
+**EN** - Blazor templates (module + project) for .NET 9
 **FR** - Modèles Blazor (module + projet) pour .NET 9
 
 ---
@@ -14,3 +14,4 @@
 ### Install
 ```bash
 dotnet new install ReSpAwN.Templates
+```
