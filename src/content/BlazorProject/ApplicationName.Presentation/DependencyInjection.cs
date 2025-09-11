@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ApplicationName.Application;
+using ApplicationName.Infrastructure;
+using ApplicationName.Presentation.Blazor;
+using ApplicationName.Presentation.EndPoints;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ApplicationName.Application;
-using ApplicationName.Infrastructure;
-using ApplicationName.Presentation.EndPoints;
 //using ApplicationName.Presentation.ModuleAuthShared;
 
 namespace ApplicationName.Presentation;
@@ -27,6 +28,9 @@ public static class DependencyInjection
             .AddApplication(configuration, environment)
             .AddInfrastructure(configuration, environment)
             .AddEndPoints(configuration/*voir si utile  , environment*/);
+
+        //services
+        //    .AddModuleName(configuration, environment); // Module Auth Shared
 
         return services;
     }
@@ -53,5 +57,14 @@ public static class DependencyInjection
         // TODO: Add production only services
 
         return services;
+    }
+
+    public static RazorComponentsEndpointConventionBuilder AddApplicationNameComponents(this IEndpointRouteBuilder routeBuilder)
+    {
+        var builder = routeBuilder.MapRazorComponents<App>()
+            .AddInteractiveServerRenderMode();
+            //.AddModuleNameComponents();
+
+        return builder;
     }
 }

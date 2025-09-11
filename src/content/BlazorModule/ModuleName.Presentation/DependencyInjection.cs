@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ModuleName.Application;
@@ -53,5 +54,13 @@ public static class DependencyInjection
         // TODO: Add production only services
 
         return services;
+    }
+
+    public static RazorComponentsEndpointConventionBuilder AddModuleNameComponents(this RazorComponentsEndpointConventionBuilder builder)
+    {
+        builder
+            .AddAdditionalAssemblies(typeof(Blazor._Imports).Assembly);
+
+        return builder;
     }
 }

@@ -4,75 +4,73 @@ using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
 using Serilog.Exceptions.EntityFrameworkCore.Destructurers;
 
-namespace ApplicationName.Presentation
+namespace ApplicationName.Presentation;
+
+public static class Program
 {
-    public static class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            // Initialiser Serilog en mode "bootstrap" pour capturer les logs tôt dans le cycle de vie de l'application avant que la configuration complète ne soit chargée.
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.FromLogContext()
+        // Initialiser Serilog en mode "bootstrap" pour capturer les logs tôt dans le cycle de vie de l'application avant que la configuration complète ne soit chargée.
+        Log.Logger = new LoggerConfiguration()
+            .Enrich.FromLogContext()
+            .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
+                .WithDefaultDestructurers())
+            .WriteTo.Console()
+            .CreateBootstrapLogger();
+
+        var builder = WebApplication.CreateBuilder(args);
+
+        #region Configurations
+
+        // Configurer Serilog pour qu'il lise la configuration depuis appsettings.json et intègre les services de l'application.
+        builder.Host.UseSerilog((context, services, cfg) =>
+            cfg.ReadFrom.Configuration(context.Configuration)
+                .ReadFrom.Services(services)
                 .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
-                    .WithDefaultDestructurers())
-                .WriteTo.Console()
-                .CreateBootstrapLogger();
+                    .WithDefaultDestructurers()
+                    .WithDestructurers(new[] { new DbUpdateExceptionDestructurer() })));
 
-            var builder = WebApplication.CreateBuilder(args);
+        #endregion
 
-            #region Configurations
+        // Ajouter les services au conteneur.
+        builder.Services.AddRazorComponents()
+            .AddInteractiveServerComponents();
 
-            // Configurer Serilog pour qu'il lise la configuration depuis appsettings.json et intègre les services de l'application.
-            builder.Host.UseSerilog((context, services, cfg) =>
-                cfg.ReadFrom.Configuration(context.Configuration)
-                    .ReadFrom.Services(services)
-                    .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
-                        .WithDefaultDestructurers()
-                        .WithDestructurers(new[] { new DbUpdateExceptionDestructurer() })));
+        // Ajouter les services personnalisés.
+        builder.Services.AddApplicationName(builder.Configuration, builder.Environment);
 
-            #endregion
+        // Permet d'accéder au HttpContext dans les services (utile aussi pour Serilog)
+        builder.Services.AddHttpContextAccessor();
 
-            // Ajouter les services au conteneur.
-            builder.Services.AddRazorComponents()
-                .AddInteractiveServerComponents();
+        var app = builder.Build();
 
-            // Ajouter les services personnalisés.
-            builder.Services.AddApplicationName(builder.Configuration, builder.Environment);
-
-            // Permet d'accéder au HttpContext dans les services (utile aussi pour Serilog)
-            builder.Services.AddHttpContextAccessor();
-
-            var app = builder.Build();
-
-            // Configurer Serilog pour capturer les logs des requêtes HTTP.
-            app.UseSerilogRequestLogging(options =>
+        // Configurer Serilog pour capturer les logs des requêtes HTTP.
+        app.UseSerilogRequestLogging(options =>
+        {
+            options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
             {
-                options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
-                {
-                    diagnosticContext.Set("Host", httpContext.Request.Host.Value);
-                    diagnosticContext.Set("Scheme", httpContext.Request.Scheme);
-                };
-            });
+                diagnosticContext.Set("Host", httpContext.Request.Host.Value);
+                diagnosticContext.Set("Scheme", httpContext.Request.Scheme);
+            };
+        });
 
-            // Configurer le pipeline HTTP.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Error");
+        // Configurer le pipeline HTTP.
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseExceptionHandler("/Error");
 
-                // HSTS est un mécanisme de sécurité qui force les clients à utiliser uniquement HTTPS.
-                // La valeur par défaut de HSTS est de 30 jours. Vous pouvez vouloir changer cela pour les scénarios de production, voir https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseAntiforgery();
-
-            app.MapStaticAssets();
-            app.MapRazorComponents<App>()
-                .AddInteractiveServerRenderMode();
-
-            app.Run();
+            // HSTS est un mécanisme de sécurité qui force les clients à utiliser uniquement HTTPS.
+            // La valeur par défaut de HSTS est de 30 jours. Vous pouvez vouloir changer cela pour les scénarios de production, voir https://aka.ms/aspnetcore-hsts.
+            app.UseHsts();
         }
+
+        app.UseHttpsRedirection();
+
+        app.UseAntiforgery();
+
+        app.MapStaticAssets();
+        app.AddApplicationNameComponents();
+
+        app.Run();
     }
 }

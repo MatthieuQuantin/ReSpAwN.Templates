@@ -1,6 +1,5 @@
 ﻿using ApplicationName.Infrastructure.Persistence;
 using ApplicationName.SharedKernel.Application.Persistence;
-using Ardalis.SharedKernel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
