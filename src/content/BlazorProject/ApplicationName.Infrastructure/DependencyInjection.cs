@@ -1,4 +1,5 @@
-﻿using ApplicationName.Infrastructure.Persistence;
+﻿using ApplicationName.Application.Interfaces.Persistence;
+using ApplicationName.Infrastructure.Persistence;
 using ApplicationName.SharedKernel.Application.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,8 +27,8 @@ public static class DependencyInjection
 
     private static IServiceCollection RegisterCommonDependencies(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-        services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
+        services.AddScoped(typeof(IApplicationNameRepository<>), typeof(EfRepository<>));
+        services.AddScoped(typeof(IApplicationNameReadRepository<>), typeof(EfRepository<>));
 
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 

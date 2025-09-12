@@ -1,12 +1,13 @@
-﻿using ApplicationName.Domain.SampleAggregate;
+﻿using ApplicationName.Application.Interfaces.Persistence;
+using ApplicationName.Domain.SampleAggregate;
 using Microsoft.Extensions.Logging;
 
 namespace ApplicationName.Application.Features.Samples.CreateSample;
 
-internal sealed class CreateSampleHandler(IRepository<Sample> repository, IValidator<CreateSampleCommand> validator, ILogger<CreateSampleHandler> logger)
+internal sealed class CreateSampleHandler(IApplicationNameRepository<Sample> repository, IValidator<CreateSampleCommand> validator, ILogger<CreateSampleHandler> logger)
     : ICommandHandler<CreateSampleCommand, Result<SampleResult>>
 {
-    private readonly IRepository<Sample> _repository = repository;
+    private readonly IApplicationNameRepository<Sample> _repository = repository;
     private readonly IValidator<CreateSampleCommand> _validator = validator;
     private readonly ILogger<CreateSampleHandler> _logger = logger;
 

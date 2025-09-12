@@ -1,13 +1,14 @@
 ﻿using Microsoft.Extensions.Logging;
+using ModuleName.Application.Interfaces.Persistence;
 using ModuleName.Domain.Commons;
 using ModuleName.Domain.PersonAggregate;
 
 namespace ModuleName.Application.Features.Persons.CreatePersonContact;
 
-internal sealed class CreatePersonContactHandler(IRepository<Person> repository, IValidator<CreatePersonContactCommand> validator, ILogger<CreatePersonContactHandler> logger)
+internal sealed class CreatePersonContactHandler(IModuleNameRepository<Person> repository, IValidator<CreatePersonContactCommand> validator, ILogger<CreatePersonContactHandler> logger)
     : ICommandHandler<CreatePersonContactCommand, Result<ContactResult>>
 {
-    private readonly IRepository<Person> _repository = repository;
+    private readonly IModuleNameRepository<Person> _repository = repository;
     private readonly IValidator<CreatePersonContactCommand> _validator = validator;
     private readonly ILogger<CreatePersonContactHandler> _logger = logger;
 

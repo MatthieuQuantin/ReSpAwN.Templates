@@ -28,8 +28,8 @@ public static class DependencyInjection
 
     private static IServiceCollection RegisterCommonDependencies(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-        services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
+        services.AddScoped(typeof(IModuleNameRepository<>), typeof(EfRepository<>));
+        services.AddScoped(typeof(IModuleNameReadRepository<>), typeof(EfRepository<>));
         services.AddScoped(typeof(IPersonRepository), typeof(PersonRepository));
 
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();

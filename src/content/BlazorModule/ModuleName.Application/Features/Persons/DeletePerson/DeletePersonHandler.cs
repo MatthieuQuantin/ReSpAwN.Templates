@@ -1,14 +1,15 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using ModuleName.Application.Interfaces.Persistence;
 using ModuleName.Domain.Contracts.PersonAggregate.Events;
 using ModuleName.Domain.PersonAggregate;
 
 namespace ModuleName.Application.Features.Persons.DeletePerson;
 
-internal sealed class DeletePersonHandler(IRepository<Person> repository, IValidator<DeletePersonCommand> validator, IMediator mediator, ILogger<DeletePersonHandler> logger)
+internal sealed class DeletePersonHandler(IModuleNameRepository<Person> repository, IValidator<DeletePersonCommand> validator, IMediator mediator, ILogger<DeletePersonHandler> logger)
     : ICommandHandler<DeletePersonCommand, Result>
 {
-    private readonly IRepository<Person> _repository = repository;
+    private readonly IModuleNameRepository<Person> _repository = repository;
     private readonly IValidator<DeletePersonCommand> _validator = validator;
     private readonly IMediator _mediator = mediator;
     private readonly ILogger<DeletePersonHandler> _logger = logger;

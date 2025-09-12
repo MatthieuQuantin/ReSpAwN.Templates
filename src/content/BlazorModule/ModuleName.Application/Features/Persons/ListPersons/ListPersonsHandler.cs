@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
+using ModuleName.Application.Interfaces.Persistence;
 using ModuleName.Domain.PersonAggregate;
 
 namespace ModuleName.Application.Features.Persons.ListPersons;
 
-internal sealed class ListPersonsHandler(IReadRepository<Person> repository, IValidator<ListPersonsQuery> validator, ILogger<ListPersonsHandler> logger) : IQueryHandler<ListPersonsQuery, Result<List<PersonResult>>>
+internal sealed class ListPersonsHandler(IModuleNameReadRepository<Person> repository, IValidator<ListPersonsQuery> validator, ILogger<ListPersonsHandler> logger) : IQueryHandler<ListPersonsQuery, Result<List<PersonResult>>>
 {
-    private readonly IReadRepository<Person> _repository = repository;
+    private readonly IModuleNameReadRepository<Person> _repository = repository;
     private readonly IValidator<ListPersonsQuery> _validator = validator;
     private readonly ILogger<ListPersonsHandler> _logger = logger;
 

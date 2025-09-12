@@ -1,6 +1,7 @@
-﻿using Ardalis.Specification.EntityFrameworkCore;
+﻿using ApplicationName.Application.Interfaces.Persistence;
+using Ardalis.Specification.EntityFrameworkCore;
 
 namespace ApplicationName.Infrastructure.Persistence;
 
-internal class EfRepository<T>(ApplicationNameDbContext dbContext) : RepositoryBase<T>(dbContext), IReadRepository<T>, IRepository<T> where T : class, IAggregateRoot
+internal class EfRepository<T>(ApplicationNameDbContext dbContext) : RepositoryBase<T>(dbContext), IApplicationNameRepository<T>, IApplicationNameReadRepository<T> where T : class, IAggregateRoot
 { }

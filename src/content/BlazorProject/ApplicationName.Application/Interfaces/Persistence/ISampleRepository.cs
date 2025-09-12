@@ -2,7 +2,7 @@
 
 namespace ApplicationName.Application.Interfaces.Persistence;
 
-public interface ISampleRepository : IRepository<Sample>, IReadRepository<Sample>
+public interface ISampleRepository : IApplicationNameRepository<Sample>, IApplicationNameReadRepository<Sample>
 {
     /// <summary>
     /// Sample method to demonstrate a custom query.

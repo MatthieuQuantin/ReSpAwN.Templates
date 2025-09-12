@@ -2,7 +2,7 @@
 
 namespace ModuleName.Application.Interfaces.Persistence;
 
-public interface IPersonRepository : IRepository<Person>, IReadRepository<Person>
+public interface IPersonRepository : IModuleNameRepository<Person>, IModuleNameReadRepository<Person>
 {
     /// <summary>
     /// Sample method to demonstrate a custom query.
