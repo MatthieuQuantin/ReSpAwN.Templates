@@ -1,5 +1,8 @@
-﻿namespace ApplicationName.Tests.Infrastructure;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace ApplicationName.Tests.Infrastructure;
+
+[ExcludeFromCodeCoverage]
 public class UnitTest1
 {
     [Fact]

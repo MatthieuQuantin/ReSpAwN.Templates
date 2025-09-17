@@ -1,10 +1,9 @@
-﻿using Ardalis.Specification.EntityFrameworkCore;
-using ModuleName.Application.Interfaces.Persistence;
+﻿using ModuleName.Application.Interfaces.Persistence.Repositories;
 using ModuleName.Domain.PersonAggregate;
 
 namespace ModuleName.Infrastructure.Persistence.Repositories;
 
-internal sealed class PersonRepository(ModuleNameDbContext dbContext) : RepositoryBase<Person>(dbContext), IPersonRepository
+internal sealed class PersonRepository(ModuleNameDbContext dbContext) : EfRepository<Person>(dbContext), IPersonRepository
 {
     /// <inheritdoc />
     public Task<List<Person>> GetPersonsWithMoreThan2Contacts(CancellationToken cancellationToken = default)

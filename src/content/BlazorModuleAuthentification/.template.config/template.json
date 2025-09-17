@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Matthieu QUANTIN",
+  "identity": "ReSpAwN.BlazorModule.Template",
+  "name": "Blazor Authentication Module (multi-project)",
+  "shortName": "r-blazor-auth-module",
+  "sourceName": "ModuleName",
+  "preferNameDirectory": true,
+  "defaultName": "MyAuthModule",
+
+  "classifications": [
+    "Blazor",
+    ".NET 9",
+    "Modular"
+  ],
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            "**/[Bb]in/**",
+            "**/[Oo]bj/**",
+            "**/.git/**",
+            "**/.vs/**",
+            ".template.config/**",
+            "BlazorModuleAuthentification.sln"
+          ]
+        }
+      ]
+    }
+  ],
+
+  "guids": [
+    "1733EC4D-7F85-490A-9371-4DB5A4E82F32",
+    "AF938E97-8CF0-49D1-83AF-9CC610027504",
+    "527D74B8-A79B-4526-B4D7-27062B2C93A2",
+    "30410CAC-08C0-4850-8B67-938BA5ECA260",
+    "80964482-7CC8-4968-BC02-F244D22DDE7A",
+    "8D98D1AA-3483-4E85-9E68-047FCCBD3A40"
+  ],
+
+  "primaryOutputs": [
+    { "path": "ModuleName.Application/ModuleName.Application.csproj" },
+    { "path": "ModuleName.Domain/ModuleName.Domain.csproj" },
+    { "path": "ModuleName.Domain.Contracts/ModuleName.Domain.Contracts.csproj" },
+    { "path": "ModuleName.Infrastructure/ModuleName.Infrastructure.csproj" },
+    { "path": "ModuleName.Presentation/ModuleName.Presentation.csproj" },
+    { "path": "ModuleName.Tests/ModuleName.Tests.csproj" }
+  ]
+}

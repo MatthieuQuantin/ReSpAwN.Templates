@@ -1,5 +1,8 @@
-﻿namespace ApplicationName.Tests.Presentation.XunitTests;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace ApplicationName.Tests.Presentation.XunitTests;
+
+[ExcludeFromCodeCoverage]
 public class UnitTest1
 {
     [Fact]

@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using ModuleName.Application.Interfaces.Persistence;
+﻿using ModuleName.Application.Interfaces.Persistence.Repositories;
 using ModuleName.Domain.PersonAggregate;
 
 namespace ModuleName.Application.Features.Persons.UpdatePerson;

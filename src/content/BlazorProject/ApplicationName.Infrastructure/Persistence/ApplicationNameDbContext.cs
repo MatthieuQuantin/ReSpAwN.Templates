@@ -30,6 +30,8 @@ internal class ApplicationNameDbContext : DbContext
     {
         modelBuilder.HasDefaultSchema(Constants.DBCONTEXT_SCHEMA_NAME);
 
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationNameDbContext).Assembly);
     }
 }

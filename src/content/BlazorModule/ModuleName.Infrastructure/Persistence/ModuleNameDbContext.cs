@@ -15,12 +15,13 @@ internal class ModuleNameDbContext : DbContext
         // This allows for flexibility in how the DbContext is configured, such as in tests or different environments.
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer(
-                $"Name=ConnectionStrings:{Constants.CONNECTION_STRING_NAME}",
-                sqlServerOptionsBuilder =>
-                {
-                    sqlServerOptionsBuilder.MigrationsHistoryTable(Constants.DBCONTEXT_MIGRATIONS_HISTORY_TABLE_NAME, Constants.DBCONTEXT_SCHEMA_NAME);
-                });
+            optionsBuilder
+                .UseSqlServer(
+                    $"Name=ConnectionStrings:{Constants.CONNECTION_STRING_NAME}",
+                    sqlServerOptionsBuilder =>
+                    {
+                        sqlServerOptionsBuilder.MigrationsHistoryTable(Constants.DBCONTEXT_MIGRATIONS_HISTORY_TABLE_NAME, Constants.DBCONTEXT_SCHEMA_NAME);
+                    });
         }
 
         base.OnConfiguring(optionsBuilder);
@@ -29,6 +30,8 @@ internal class ModuleNameDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema(Constants.DBCONTEXT_SCHEMA_NAME);
+
+        base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ModuleNameDbContext).Assembly);
     }

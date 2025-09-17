@@ -1,6 +1,5 @@
-﻿using ApplicationName.Application.Interfaces.Persistence;
+﻿using ApplicationName.Application.Interfaces.Persistence.Repositories;
 using ApplicationName.Domain.SampleAggregate;
-using Microsoft.Extensions.Logging;
 
 namespace ApplicationName.Application.Features.Samples.CreateSample;
 
