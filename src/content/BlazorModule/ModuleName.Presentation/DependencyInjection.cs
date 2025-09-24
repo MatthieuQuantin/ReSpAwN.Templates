@@ -28,12 +28,12 @@ public static class DependencyInjection
         return services;
     }
 
-    public static WebApplication MapModuleAuthentification(this WebApplication builder)
+    public static WebApplication MapModuleName(this WebApplication builder)
     {
         return builder;
     }
 
-    public static RazorComponentsEndpointConventionBuilder AddModuleNameComponents(this RazorComponentsEndpointConventionBuilder builder)
+    public static RazorComponentsEndpointConventionBuilder MapModuleNameComponents(this RazorComponentsEndpointConventionBuilder builder)
     {
         builder
             .AddAdditionalAssemblies(typeof(Blazor._Imports).Assembly);
