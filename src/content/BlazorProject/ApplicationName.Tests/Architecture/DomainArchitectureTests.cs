@@ -25,7 +25,7 @@ public class DomainArchitectureTests : BaseArchitectureTests
 
         // Récupère tous les types de l'assembly Domain qui doivent respecter les contraintes
         var result = Types.InAssembly(DomainAssembly)
-            .That().ResideInNamespace(DomainAssemblyName)
+            .That().HaveNameStartingWith(DomainAssemblyName, StringComparison.Ordinal)
             .Should().OnlyHaveDependenciesOn(allowedDependencies)
             .GetResult();
 
@@ -41,7 +41,7 @@ public class DomainArchitectureTests : BaseArchitectureTests
                 var typeWithWrongParentType = baseType != null
                     && baseType != typeof(object)
                     && baseType.Namespace != null
-                    && !allowedDependencies.Any(allowed => baseType.Namespace.StartsWith(allowed));
+                    && !allowedDependencies.Any(allowed => baseType.Namespace.StartsWith(allowed, StringComparison.Ordinal));
 
                 // Récupère tous les types référencés dans les membres (propriétés, champs, méthodes, événements)
                 var memberReferencedTypes = type
@@ -61,7 +61,7 @@ public class DomainArchitectureTests : BaseArchitectureTests
                     })
                     .Where(t => t.Namespace != null)
                     .Distinct()
-                    .Where(t => !allowedDependencies.Any(allowed => t.Namespace!.StartsWith(allowed)))
+                    .Where(t => !allowedDependencies.Any(allowed => t.Namespace!.StartsWith(allowed, StringComparison.Ordinal)))
                     .Select(t => t.FullName)
                     .ToList();
 
@@ -78,7 +78,7 @@ public class DomainArchitectureTests : BaseArchitectureTests
                 var allAttributeTypes = attributeTypes.Concat(memberAttributeTypes)
                     .Where(t => t?.Namespace != null)
                     .Distinct()
-                    .Where(t => !allowedDependencies.Any(allowed => t!.Namespace!.StartsWith(allowed)))
+                    .Where(t => !allowedDependencies.Any(allowed => t!.Namespace!.StartsWith(allowed, StringComparison.Ordinal)))
                     .Select(t => t!.FullName)
                     .ToList();
 
@@ -136,7 +136,7 @@ public class DomainArchitectureTests : BaseArchitectureTests
     {
         var result = Types.InAssembly(DomainAssembly)
             .That().AreClasses()
-            .And().ResideInNamespace(DomainAssemblyName)
+            .And().HaveNameStartingWith(DomainAssemblyName, StringComparison.Ordinal)
             .And().DoNotHaveNameEndingWith("Converter")// Exclut les Converter générés par Vogen
             .Should().BeSealed()
             .Or().BeAbstract()
@@ -162,8 +162,8 @@ public class DomainArchitectureTests : BaseArchitectureTests
         var failingTypes = types
             .Where(t =>
                 !t.IsSealed ||
-                (!t.FullName.StartsWith(DomainContractsAssemblyName) || !t.FullName.Contains($"{EventsNamespace}.")) ||
-                !t.Name.EndsWith(EventSuffix))
+                (!t.FullName.StartsWith(DomainContractsAssemblyName, StringComparison.Ordinal) || !t.FullName.Contains($"{EventsNamespace}.", StringComparison.Ordinal)) ||
+                !t.Name.EndsWith(EventSuffix, StringComparison.Ordinal))
             .ToList();
 
         var details = new List<string>();
@@ -175,10 +175,10 @@ public class DomainArchitectureTests : BaseArchitectureTests
             if (!t.IsSealed)
                 issues.Add("n'est pas sealed");
 
-            if (!t.FullName.StartsWith(DomainContractsAssemblyName) || !t.FullName.Contains($"{EventsNamespace}."))
+            if (!t.FullName.StartsWith(DomainContractsAssemblyName, StringComparison.Ordinal) || !t.FullName.Contains($"{EventsNamespace}.", StringComparison.Ordinal))
                 issues.Add($"n'est pas dans un namespace {DomainContractsAssemblyName}.*{EventsNamespace}");
 
-            if (!t.Name.EndsWith(EventSuffix))
+            if (!t.Name.EndsWith(EventSuffix, StringComparison.Ordinal))
                 issues.Add($"ne se termine pas par {EventSuffix}");
 
             details.Add($"{t.FullName} - {string.Join(", ", issues)}");
@@ -201,8 +201,8 @@ public class DomainArchitectureTests : BaseArchitectureTests
         var failingTypes = types
             .Where(t =>
                 !t.IsSealed ||
-                (!t.FullName.StartsWith(DomainContractsAssemblyName) || !t.FullName.Contains($"{SpecificationsNamespace}.")) ||
-                !t.Name.EndsWith(SpecificationSuffix))
+                (!t.FullName.StartsWith(DomainContractsAssemblyName, StringComparison.Ordinal) || !t.FullName.Contains($"{SpecificationsNamespace}.", StringComparison.Ordinal)) ||
+                !t.Name.EndsWith(SpecificationSuffix, StringComparison.Ordinal))
             .ToList();
 
         var details = new List<string>();
@@ -214,10 +214,10 @@ public class DomainArchitectureTests : BaseArchitectureTests
             if (!t.IsSealed)
                 issues.Add("n'est pas sealed");
 
-            if (!t.FullName.StartsWith(DomainContractsAssemblyName) || !t.FullName.Contains($"{SpecificationsNamespace}."))
+            if (!t.FullName.StartsWith(DomainContractsAssemblyName, StringComparison.Ordinal) || !t.FullName.Contains($"{SpecificationsNamespace}.", StringComparison.Ordinal))
                 issues.Add($"n'est pas dans un namespace {DomainContractsAssemblyName}.*{SpecificationsNamespace}");
 
-            if (!t.Name.EndsWith(SpecificationSuffix))
+            if (!t.Name.EndsWith(SpecificationSuffix, StringComparison.Ordinal))
                 issues.Add($"ne se termine pas par {SpecificationSuffix}");
 
             details.Add($"{t.FullName} - {string.Join(", ", issues)}");

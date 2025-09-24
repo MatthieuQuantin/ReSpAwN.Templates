@@ -11,14 +11,14 @@ dotnet tool install --global dotnet-ef
 ### Initialisation de la migration sur une nouvelle base ou une base vide
 ```bash
 # Générer la migration InitialCreate
-dotnet ef migrations add InitialCreate --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation --output-dir Migrations
+dotnet ef migrations add InitialCreate --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation --context ApplicationNameDbContext --output-dir Persistence/Migrations
 # version courte
-dotnet ef migrations add InitialCreate -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation -o Persistence/Migrations
+dotnet ef migrations add InitialCreate -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation -c ApplicationNameDbContext -o Persistence/Migrations
 
 # Appliquer la migration InitialCreate à la base de données
-dotnet ef database update --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation
+dotnet ef database update --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation --context ApplicationNameDbContext
 # version courte
-dotnet ef database update -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation
+dotnet ef database update -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation -c ApplicationNameDbContext
 ```
 
 
@@ -34,38 +34,38 @@ Idéalement il faudrait déplacer les configurations présentes dans le DbContext d
 
 ```bash
 # Générer la migration Baseline
-dotnet ef migrations add Baseline --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation --output-dir Persistence/Migrations
+dotnet ef migrations add Baseline --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation --context ApplicationNameDbContext --output-dir Persistence/Migrations
 # version courte
-dotnet ef migrations add Baseline -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation -o Persistence/Migrations
+dotnet ef migrations add Baseline -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation -c ApplicationNameDbContext -o Persistence/Migrations
 ```
 Il faut ensuite vider les méthodes Up() et Down() de la migration Baseline et supprimer le fichier .designer.cs associé.
 
 ```bash
 # Appliquer la migration Baseline à la base de données
-dotnet ef database update --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation
+dotnet ef database update --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation --context ApplicationNameDbContext
 # version courte
-dotnet ef database update -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation
+dotnet ef database update -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation -c ApplicationNameDbContext
 ```
 
 ### Ajouter une nouvelle migration
 ```bash
-dotnet ef migrations add MigrationName --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation --output-dir Migrations
+dotnet ef migrations add MigrationName --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation --context ApplicationNameDbContext --output-dir Persistence/Migrations
 # version courte
-dotnet ef migrations add MigrationName -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation -o Migrations
+dotnet ef migrations add MigrationName -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation -c ApplicationNameDbContext -o Persistence/Migrations
 ```
 
 ### Appliquer une migration (mise à jour de la BDD)
 ```bash
-dotnet ef database update --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation
+dotnet ef database update --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation --context ApplicationNameDbContext
 # version courte
-dotnet ef database update -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation
+dotnet ef database update -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation -c ApplicationNameDbContext
 ```
 
 ### Aller à une migration spécifique
 ```bash
-dotnet ef database update MigrationName --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation
+dotnet ef database update MigrationName --project ApplicationName/ApplicationName.Infrastructure --startup-project ApplicationName/ApplicationName.Presentation --context ApplicationNameDbContext
 # version courte
-dotnet ef database update MigrationName -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation
+dotnet ef database update MigrationName -p ApplicationName/ApplicationName.Infrastructure -s ApplicationName/ApplicationName.Presentation -c ApplicationNameDbContext
 ```
 
-remplacer `MigrationName` par le nom de la migration cible ou `0` pour revenir à l'état initial (sans aucune migration appliquée).
+Remplacer `MigrationName` par le nom de la migration cible ou `0` pour revenir à l'état initial (sans aucune migration appliquée).

@@ -1,12 +1,12 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using ModuleName.Application.Interfaces.Persistence.Repositories;
 using ModuleName.Domain.PersonAggregate;
 
 namespace ModuleName.Application.Features.Persons.UpdatePerson;
 
-internal sealed class UpdatePersonHandler(IRepository<Person> repository, IValidator<UpdatePersonCommand> validator, ILogger<UpdatePersonHandler> logger)
+internal sealed class UpdatePersonHandler(IModuleNameRepository<Person> repository, IValidator<UpdatePersonCommand> validator, ILogger<UpdatePersonHandler> logger)
     : ICommandHandler<UpdatePersonCommand, Result>
 {
-    private readonly IRepository<Person> _repository = repository;
+    private readonly IModuleNameRepository<Person> _repository = repository;
     private readonly IValidator<UpdatePersonCommand> _validator = validator;
     private readonly ILogger<UpdatePersonHandler> _logger = logger;
 

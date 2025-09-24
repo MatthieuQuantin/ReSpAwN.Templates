@@ -1,16 +1,16 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Logging;
+using ModuleName.Application.Interfaces.Persistence.Repositories;
 using ModuleName.Domain.Contracts.PersonAggregate.Events;
 using ModuleName.Domain.PersonAggregate;
 
 namespace ModuleName.Application.Features.Persons.DeletePerson;
 
-internal sealed class DeletePersonHandler(IRepository<Person> repository, IValidator<DeletePersonCommand> validator, IMediator mediator, ILogger<DeletePersonHandler> logger)
+internal sealed class DeletePersonHandler(IModuleNameRepository<Person> repository, IValidator<DeletePersonCommand> validator, IPublisher publisher, ILogger<DeletePersonHandler> logger)
     : ICommandHandler<DeletePersonCommand, Result>
 {
-    private readonly IRepository<Person> _repository = repository;
+    private readonly IModuleNameRepository<Person> _repository = repository;
     private readonly IValidator<DeletePersonCommand> _validator = validator;
-    private readonly IMediator _mediator = mediator;
+    private readonly IPublisher _publisher = publisher;
     private readonly ILogger<DeletePersonHandler> _logger = logger;
 
     public async Task<Result> Handle(DeletePersonCommand request, CancellationToken cancellationToken)
@@ -27,7 +27,7 @@ internal sealed class DeletePersonHandler(IRepository<Person> repository, IValid
             await _repository.DeleteAsync(person, cancellationToken);
 
             var @event = new PersonDeletedEvent(person.Id.Value);
-            await _mediator.Publish(@event, cancellationToken);
+            await _publisher.Publish(@event, cancellationToken);
 
             return Result.Success();
         }

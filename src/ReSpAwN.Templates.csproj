@@ -4,7 +4,7 @@
 
 		<!-- Métadonnées NuGet -->
 		<PackageId>ReSpAwN.Templates</PackageId>
-		<Version>1.0.0-alpha-3</Version>
+		<Version>0.1.0</Version>
 		<Authors>ReSpAwN</Authors>
 		<Description>Blazor templates (module + project)</Description>
 		<PackageTags>dotnet-new;template;blazor</PackageTags>
@@ -20,13 +20,13 @@
 		<NoDefaultExcludes>true</NoDefaultExcludes>
 
 		<!-- Optionnel mais utile sur nuget.org -->
-		<!--<PackageProjectUrl>https://dev.azure.com/matthieuquantin/_git/Templates%20VS</PackageProjectUrl>
-		<RepositoryUrl>https://dev.azure.com/matthieuquantin/_git/Templates%20VS</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>-->
+		<PackageProjectUrl>https://github.com/MatthieuQuantin/ReSpAwN.Templates</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/MatthieuQuantin/ReSpAwN.Templates</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>icon.png</PackageIcon>
-		<!-- <PackageLicenseExpression>MIT</PackageLicenseExpression> -->
-		<!-- <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance> -->
+		 <PackageLicenseExpression>MIT</PackageLicenseExpression> 
+		 <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance> 
 	</PropertyGroup>
 
 	<!-- Inclure tout le contenu sous /content (et filtrer bin/obj) -->

@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using ApplicationName.Application;
+﻿using ApplicationName.Application;
 using ApplicationName.Infrastructure;
+using ApplicationName.Presentation.Blazor;
 using ApplicationName.Presentation.EndPoints;
 //using ApplicationName.Presentation.ModuleAuthShared;
 
@@ -12,46 +10,59 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationName(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
     {
-        services.RegisterCommonDependencies(configuration);
+        #region Pour l'authentification et l'autorisation des utilisateurs (Identity)
 
-        if (environment.IsDevelopment())
-        {
-            services.RegisterDevelopmentOnlyDependencies(configuration);
-        }
-        else
-        {
-            services.RegisterProductionOnlyDependencies(configuration);
-        }
+        //services.AddAuthentication();
+        //services.AddAuthorization();
+
+        #endregion
+
+        services
+            .AddRazorComponents()
+            .AddInteractiveServerComponents();
+
+        //services
+        //    .AddSingleton<IPermissionProvider, PresentationPermissionProvider>();
+
+        // Injection de tous les handlers de l'application
+        services
+            .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
 
         services
             .AddApplication(configuration, environment)
             .AddInfrastructure(configuration, environment)
             .AddEndPoints(configuration/*voir si utile  , environment*/);
 
-        return services;
-    }
-
-    private static IServiceCollection RegisterCommonDependencies(this IServiceCollection services, IConfiguration configuration)
-    {
-        //services.AddSingleton<IPermissionProvider, PresentationPermissionProvider>();
-
-        // Injection de tous les handlers de l'application
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
+        //services
+        //    .AddModuleName(configuration, environment); // Module Auth Shared
 
         return services;
     }
 
-    private static IServiceCollection RegisterDevelopmentOnlyDependencies(this IServiceCollection services, IConfiguration configuration)
+    public static WebApplication MapApplicationName(this WebApplication builder)
     {
-        // TODO: Add development only services
+        #region Pour l'authentification et l'autorisation des utilisateurs (Identity)
 
-        return services;
-    }
+        //builder
+        //    .UseAuthentication()
+        //    .UseAuthorization();
 
-    private static IServiceCollection RegisterProductionOnlyDependencies(this IServiceCollection services, IConfiguration configuration)
-    {
-        // TODO: Add production only services
+        #endregion
 
-        return services;
+        builder
+            .UseAntiforgery();
+
+        builder
+            .MapStaticAssets();
+
+        //builder
+        //    .MapModuleName();
+
+        builder
+            .MapRazorComponents<App>()
+            .AddInteractiveServerRenderMode();
+            //.AddModuleNameComponents();
+
+        return builder;
     }
 }

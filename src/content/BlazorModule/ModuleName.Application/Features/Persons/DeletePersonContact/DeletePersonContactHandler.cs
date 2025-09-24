@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using ModuleName.Application.Interfaces.Persistence.Repositories;
 using ModuleName.Domain.PersonAggregate;
 
 namespace ModuleName.Application.Features.Persons.DeletePersonContact;
 
-internal sealed class DeletePersonContactHandler(IRepository<Person> repository, IValidator<DeletePersonContactCommand> validator, ILogger<DeletePersonContactHandler> logger) : ICommandHandler<DeletePersonContactCommand, Result>
+internal sealed class DeletePersonContactHandler(IModuleNameRepository<Person> repository, IValidator<DeletePersonContactCommand> validator, ILogger<DeletePersonContactHandler> logger) : ICommandHandler<DeletePersonContactCommand, Result>
 {
-    private readonly IRepository<Person> _repository = repository;
+    private readonly IModuleNameRepository<Person> _repository = repository;
     private readonly IValidator<DeletePersonContactCommand> _validator = validator;
     private readonly ILogger<DeletePersonContactHandler> _logger = logger;
 

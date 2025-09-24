@@ -1,14 +1,14 @@
 ﻿using ApplicationName.SharedKernel.Application.Persistence;
-using Microsoft.Extensions.Logging;
+using ModuleName.Application.Interfaces.Persistence.Repositories;
 using ModuleName.Domain.PersonAggregate;
 
 namespace ModuleName.Application.Features.Persons.CreatePerson;
 
-internal sealed class CreatePersonHandler(IUnitOfWork unitOfWork, IRepository<Person> repository, IValidator<CreatePersonCommand> validator, ILogger<CreatePersonHandler> logger)
+internal sealed class CreatePersonHandler(IUnitOfWork unitOfWork, IModuleNameRepository<Person> repository, IValidator<CreatePersonCommand> validator, ILogger<CreatePersonHandler> logger)
     : ICommandHandler<CreatePersonCommand, Result<PersonResult>>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
-    private readonly IRepository<Person> _repository = repository;
+    private readonly IModuleNameRepository<Person> _repository = repository;
     private readonly IValidator<CreatePersonCommand> _validator = validator;
     private readonly ILogger<CreatePersonHandler> _logger = logger;
 

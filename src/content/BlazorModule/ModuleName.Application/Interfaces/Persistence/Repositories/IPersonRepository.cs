@@ -1,8 +1,8 @@
 ﻿using ModuleName.Domain.PersonAggregate;
 
-namespace ModuleName.Application.Interfaces.Persistence;
+namespace ModuleName.Application.Interfaces.Persistence.Repositories;
 
-public interface IPersonRepository : IRepository<Person>, IReadRepository<Person>
+public interface IPersonRepository : IModuleNameRepository<Person>, IModuleNameReadRepository<Person>
 {
     /// <summary>
     /// Sample method to demonstrate a custom query.

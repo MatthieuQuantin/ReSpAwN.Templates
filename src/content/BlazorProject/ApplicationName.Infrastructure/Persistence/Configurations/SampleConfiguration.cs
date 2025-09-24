@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ApplicationName.Domain.SampleAggregate;
+﻿using ApplicationName.Domain.SampleAggregate;
 
 namespace ApplicationName.Infrastructure.Persistence.Configurations;
 
