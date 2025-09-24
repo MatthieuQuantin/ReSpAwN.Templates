@@ -4,7 +4,7 @@
 
 		<!-- Métadonnées NuGet -->
 		<PackageId>ReSpAwN.Templates</PackageId>
-		<Version>1.0.0-alpha-3</Version>
+		<Version>0.1.0</Version>
 		<Authors>ReSpAwN</Authors>
 		<Description>Blazor templates (module + project)</Description>
 		<PackageTags>dotnet-new;template;blazor</PackageTags>
