@@ -1,4 +1,3 @@
-using ApplicationName.Presentation.Blazor;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
@@ -10,17 +9,19 @@ public static class Program
 {
     public static void Main(string[] args)
     {
-        // Initialiser Serilog en mode "bootstrap" pour capturer les logs tôt dans le cycle de vie de l'application avant que la configuration complète ne soit chargée.
+        #region Initialiser Serilog en mode "bootstrap" pour capturer les logs tôt dans le cycle de vie de l'application avant que la configuration complète ne soit chargée.
+
         Log.Logger = new LoggerConfiguration()
             .Enrich.FromLogContext()
-            .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
-                .WithDefaultDestructurers())
+            .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder().WithDefaultDestructurers())
             .WriteTo.Console()
             .CreateBootstrapLogger();
 
+        #endregion
+
         var builder = WebApplication.CreateBuilder(args);
 
-        #region Configurations
+        #region Configuration de Serilog
 
         // Configurer Serilog pour qu'il lise la configuration depuis appsettings.json et intègre les services de l'application.
         builder.Host.UseSerilog((context, services, cfg) =>
@@ -32,10 +33,6 @@ public static class Program
 
         #endregion
 
-        // Ajouter les services au conteneur.
-        builder.Services.AddRazorComponents()
-            .AddInteractiveServerComponents();
-
         // Ajouter les services personnalisés.
         builder.Services.AddApplicationName(builder.Configuration, builder.Environment);
 
@@ -44,7 +41,8 @@ public static class Program
 
         var app = builder.Build();
 
-        // Configurer Serilog pour capturer les logs des requêtes HTTP.
+        #region Configuration de Serilog dans le pipeline HTTP pour capturer les logs des requêtes HTTP
+
         app.UseSerilogRequestLogging(options =>
         {
             options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
@@ -53,6 +51,8 @@ public static class Program
                 diagnosticContext.Set("Scheme", httpContext.Request.Scheme);
             };
         });
+
+        #endregion
 
         // Configurer le pipeline HTTP.
         if (!app.Environment.IsDevelopment())
@@ -66,10 +66,7 @@ public static class Program
 
         app.UseHttpsRedirection();
 
-        app.UseAntiforgery();
-
-        app.MapStaticAssets();
-        app.AddApplicationNameComponents();
+        app.MapApplicationName();
 
         app.Run();
     }

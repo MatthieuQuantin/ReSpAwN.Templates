@@ -13,16 +13,12 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddModuleName(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
     {
-        services.RegisterCommonDependencies(configuration);
+        //services
+        //    .AddSingleton<IPermissionProvider, PresentationPermissionProvider>();
 
-        if (environment.IsDevelopment())
-        {
-            services.RegisterDevelopmentOnlyDependencies(configuration);
-        }
-        else
-        {
-            services.RegisterProductionOnlyDependencies(configuration);
-        }
+        // Injection de tous les handlers de l'application
+        services
+            .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
 
         services
             .AddApplication(configuration, environment)
@@ -32,28 +28,9 @@ public static class DependencyInjection
         return services;
     }
 
-    private static IServiceCollection RegisterCommonDependencies(this IServiceCollection services, IConfiguration configuration)
+    public static WebApplication MapModuleAuthentification(this WebApplication builder)
     {
-        //services.AddSingleton<IPermissionProvider, PresentationPermissionProvider>();
-
-        // Injection de tous les handlers de l'application
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
-
-        return services;
-    }
-
-    private static IServiceCollection RegisterDevelopmentOnlyDependencies(this IServiceCollection services, IConfiguration configuration)
-    {
-        // TODO: Add development only services
-
-        return services;
-    }
-
-    private static IServiceCollection RegisterProductionOnlyDependencies(this IServiceCollection services, IConfiguration configuration)
-    {
-        // TODO: Add production only services
-
-        return services;
+        return builder;
     }
 
     public static RazorComponentsEndpointConventionBuilder AddModuleNameComponents(this RazorComponentsEndpointConventionBuilder builder)

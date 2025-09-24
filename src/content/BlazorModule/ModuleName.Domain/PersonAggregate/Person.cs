@@ -29,11 +29,17 @@ public sealed class Person : EntityBase<PersonId>, IAggregateRoot
 
     public static Result<Person> Create(PersonFirstName firstName, PersonLastName lastName)
     {
+
+        List<ValidationError> validationErrors = [];
+
         if (firstName is null)
-            return Result<Person>.Invalid(new ValidationError(nameof(firstName), "Le prénom de la personne ne peut pas être null."));
+            validationErrors.Add(new ValidationError(nameof(firstName), "Le prénom de la personne ne peut pas être null."));
 
         if (lastName is null)
-            return Result<Person>.Invalid(new ValidationError(nameof(lastName), "Le nom de la personne ne peut pas être null."));
+            validationErrors.Add(new ValidationError(nameof(lastName), "Le nom de la personne ne peut pas être null."));
+
+        if (validationErrors.Count != 0)
+            return Result<Person>.Invalid(validationErrors);
 
         return Result.Created(new Person(firstName, lastName));
     }

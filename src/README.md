@@ -8,8 +8,9 @@
 ## EN
 
 ### Templates included
-- **r-blazor-module**: multi-project Blazor module
 - **r-blazor-project**: multi-project Blazor project
+- **r-blazor-module**: multi-project Blazor module
+- **r-blazor-auth-module**: multi-project Blazor module with authentication
 
 ### Install
 ```bash

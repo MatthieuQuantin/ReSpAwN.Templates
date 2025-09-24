@@ -25,7 +25,7 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
     public void Application_Should_Not_Have_Dependencies_On_Infrastructure_Or_Presentation()
     {
         var result = Types.InAssembly(ApplicationAssembly)
-            .That().ResideInNamespace(ApplicationAssemblyName)
+            .That().HaveNameStartingWith(ApplicationAssemblyName, StringComparison.Ordinal)
             .ShouldNot().HaveDependencyOnAny(InfrastructureAssemblyName, PresentationAssemblyName)
             .GetResult();
 
@@ -40,6 +40,8 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
 
         var details = new List<string>();
 
+        var namespacePrefix = ApplicationAssemblyName + "." + CommandsNamespace;
+
         var types = Types.InAssembly(ApplicationAssembly)
             .That().ImplementInterface(typeof(ICommand<>))
             .GetTypes();
@@ -47,8 +49,8 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
         var failingTypes = types
             .Where(t =>
                 !t.IsSealed ||
-                !t.FullName.StartsWith($"{ApplicationAssemblyName}.{CommandsNamespace}.") ||
-                !t.Name.EndsWith(CommandSuffix))
+                !t.FullName.StartsWith($"{namespacePrefix}.", StringComparison.Ordinal) ||
+                !t.Name.EndsWith(CommandSuffix, StringComparison.Ordinal))
             .ToList();
 
         failingTypes.ForEach(t =>
@@ -58,10 +60,10 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
             if (!t.IsSealed)
                 issues.Add("n'est pas sealed");
 
-            if (!t.FullName.StartsWith($"{ApplicationAssemblyName}.{CommandsNamespace}."))
-                issues.Add($"n'est pas dans un namespace {ApplicationAssemblyName}.{CommandsNamespace}");
+            if (!t.FullName.StartsWith($"{namespacePrefix}.", StringComparison.Ordinal))
+                issues.Add($"n'est pas dans un namespace {namespacePrefix}");
 
-            if (!t.Name.EndsWith(CommandSuffix))
+            if (!t.Name.EndsWith(CommandSuffix, StringComparison.Ordinal))
                 issues.Add($"ne se termine pas par {CommandSuffix}");
 
             details.Add($"{t.FullName} - {string.Join(", ", issues)}");
@@ -80,6 +82,8 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
 
         var details = new List<string>();
 
+        var namespacePrefix = ApplicationAssemblyName + "." + QueriesNamespace;
+
         var types = Types.InAssembly(ApplicationAssembly)
             .That().ImplementInterface(typeof(IQuery<>))
             .GetTypes();
@@ -87,8 +91,8 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
         var failingTypes = types
             .Where(t =>
                 !t.IsSealed ||
-                !t.FullName.StartsWith($"{ApplicationAssemblyName}.{QueriesNamespace}.")
-                || !t.Name.EndsWith(QuerySuffix))
+                !t.FullName.StartsWith($"{namespacePrefix}.", StringComparison.Ordinal)
+                || !t.Name.EndsWith(QuerySuffix, StringComparison.Ordinal))
             .ToList();
 
         failingTypes.ForEach(t =>
@@ -98,10 +102,10 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
             if (!t.IsSealed)
                 issues.Add("n'est pas sealed");
 
-            if (!t.FullName.StartsWith($"{ApplicationAssemblyName}.{QueriesNamespace}."))
-                issues.Add($"n'est pas dans un namespace {ApplicationAssemblyName}.{QueriesNamespace}");
+            if (!t.FullName.StartsWith($"{namespacePrefix}.", StringComparison.Ordinal))
+                issues.Add($"n'est pas dans un namespace {namespacePrefix}");
 
-            if (!t.Name.EndsWith(QuerySuffix))
+            if (!t.Name.EndsWith(QuerySuffix, StringComparison.Ordinal))
                 issues.Add($"ne se termine pas par {QuerySuffix}");
 
             details.Add($"{t.FullName} - {string.Join(", ", issues)}");
@@ -120,6 +124,8 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
 
         var details = new List<string>();
 
+        var namespacePrefix = ApplicationAssemblyName + "." + HandlersNamespace;
+
         var types = Types.InAssembly(ApplicationAssembly)
             .That().ImplementInterface(typeof(ICommandHandler<,>))
             .Or().ImplementInterface(typeof(IQueryHandler<,>))
@@ -128,8 +134,8 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
         var failingTypes = types
             .Where(t =>
                 !t.IsSealed ||
-                !t.FullName.StartsWith($"{ApplicationAssemblyName}.{HandlersNamespace}.")
-                || !t.Name.EndsWith(HandlerSuffix))
+                !t.FullName.StartsWith($"{namespacePrefix}.", StringComparison.Ordinal)
+                || !t.Name.EndsWith(HandlerSuffix, StringComparison.Ordinal))
             .ToList();
 
         failingTypes.ForEach(t =>
@@ -139,10 +145,10 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
             if (!t.IsSealed)
                 issues.Add("n'est pas sealed");
 
-            if (!t.FullName.StartsWith($"{ApplicationAssemblyName}.{HandlersNamespace}."))
-                issues.Add($"n'est pas dans un namespace {ApplicationAssemblyName}.{HandlersNamespace}");
+            if (!t.FullName.StartsWith($"{namespacePrefix}.", StringComparison.Ordinal))
+                issues.Add($"n'est pas dans un namespace {namespacePrefix}");
 
-            if (!t.Name.EndsWith(HandlerSuffix))
+            if (!t.Name.EndsWith(HandlerSuffix, StringComparison.Ordinal))
                 issues.Add($"ne se termine pas par {HandlerSuffix}");
 
             details.Add($"{t.FullName} - {string.Join(", ", issues)}");
@@ -162,6 +168,8 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
 
         var details = new List<string>();
 
+        var namespacePrefix = ApplicationAssemblyName + "." + ValidatorsNamespace;
+
         var types = Types.InAssembly(ApplicationAssembly)
             .That().Inherit(typeof(AbstractValidator<>))
             .GetTypes();
@@ -169,8 +177,8 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
         var failingTypes = types
             .Where(t =>
                 !t.IsSealed ||
-                !t.FullName.StartsWith($"{ApplicationAssemblyName}.{ValidatorsNamespace}.") ||
-                (!t.Name.EndsWith(CommandValidatorSuffix) && !t.Name.EndsWith(QueryValidatorSuffix)))
+                !t.FullName.StartsWith($"{namespacePrefix}.", StringComparison.Ordinal) ||
+                (!t.Name.EndsWith(CommandValidatorSuffix, StringComparison.Ordinal) && !t.Name.EndsWith(QueryValidatorSuffix, StringComparison.Ordinal)))
             .ToList();
 
         failingTypes.ForEach(t =>
@@ -180,10 +188,10 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
             if (!t.IsSealed)
                 issues.Add("n'est pas sealed");
 
-            if (!t.FullName.StartsWith($"{ApplicationAssemblyName}.{ValidatorsNamespace}."))
-                issues.Add($"n'est pas dans un namespace {ApplicationAssemblyName}.{ValidatorsNamespace}");
+            if (!t.FullName.StartsWith($"{namespacePrefix}.", StringComparison.Ordinal))
+                issues.Add($"n'est pas dans un namespace {namespacePrefix}");
 
-            if (!t.Name.EndsWith(CommandValidatorSuffix) && !t.Name.EndsWith(QueryValidatorSuffix))
+            if (!t.Name.EndsWith(CommandValidatorSuffix, StringComparison.Ordinal) && !t.Name.EndsWith(QueryValidatorSuffix, StringComparison.Ordinal))
                 issues.Add($"ne se termine pas par {CommandValidatorSuffix} ou {QueryValidatorSuffix}");
 
             details.Add($"{t.FullName} - {string.Join(", ", issues)}");
@@ -203,47 +211,51 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
 
         var details = new List<string>();
 
+        var namespacePrefix = ApplicationAssemblyName + "." + CustomRepositoriesNamespace;
+
+        //TODO : A sortir
+        bool ImplementInterface(Type type, Type @interface)
+        {
+            var allInterfaces = type.GetInterfaces();
+            // Gère le cas des interfaces non génériques
+            if (allInterfaces.Contains(@interface))
+                return true;
+            // Gère le cas des interfaces génériques
+            return allInterfaces.Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == @interface);
+        }
+
         var types = Types.InAssembly(ApplicationAssembly)
-            .That().Inherit(typeof(IRepository<>))
-            .Or().Inherit(typeof(IReadRepository<>))
-            .Or().ResideInNamespace($"{ApplicationAssemblyName}.{CustomRepositoriesNamespace}")
-            .Or().HaveNameEndingWith(CustomRepositorySuffix)
+            .That().HaveNameStartingWith(namespacePrefix, StringComparison.Ordinal)
+            .Or().ImplementInterface(typeof(IRepository<>))
+            .Or().ImplementInterface(typeof(IReadRepository<>))
             .GetTypes();
 
-        var failingTypes = types
-            .Where(t =>
-                !t.IsInterface ||
-                !t.FullName.StartsWith($"{ApplicationAssemblyName}.{CustomRepositoriesNamespace}.") ||
-                t.GetInterface(typeof(IRepository<>).Name) is null ||
-                t.GetInterface(typeof(IReadRepository<>).Name) is null ||
-                !t.Name.StartsWith(CustomRepositoryPrefix) ||
-                !t.Name.EndsWith(CustomRepositorySuffix))
-            .ToList();
-
-        failingTypes.ForEach(t =>
+        foreach (var t in types)
         {
             var issues = new List<string>();
 
             if (!t.IsInterface)
                 issues.Add("n'est pas une interface");
 
-            if (!t.FullName.StartsWith($"{ApplicationAssemblyName}.{CustomRepositoriesNamespace}."))
-                issues.Add($"n'est pas dans un namespace {ApplicationAssemblyName}.{CustomRepositoriesNamespace}");
+            if (t.Namespace == null || !t.Namespace.StartsWith(namespacePrefix, StringComparison.Ordinal))
+                issues.Add($"n'est pas dans un namespace {namespacePrefix}");
 
-            if (t.GetInterface(typeof(IRepository<>).Name) is null)
-                issues.Add("n'hérite pas de IRepository<>");
+            if (!ImplementInterface(t, typeof(IRepository<>)) && !ImplementInterface(t, typeof(IReadRepository<>)))
+                issues.Add("n'hérite pas de IRepository<> ni de IReadRepository<>");
 
-            if (t.GetInterface(typeof(IReadRepository<>).Name) is null)
-                issues.Add("n'hérite pas de IReadRepository<>");
+            // Nom sans l'arité des génériques (évite le `1, `2, …)
+            var idx = t.Name.IndexOf('`');
+            var baseName = idx >= 0 ? t.Name.Substring(0, idx) : t.Name;
 
-            if (!t.Name.StartsWith(CustomRepositoryPrefix))
+            if (!baseName.StartsWith(CustomRepositoryPrefix, StringComparison.Ordinal))
                 issues.Add($"ne commence pas par {CustomRepositoryPrefix}");
 
-            if (!t.Name.EndsWith(CustomRepositorySuffix))
+            if (!baseName.EndsWith(CustomRepositorySuffix, StringComparison.Ordinal))
                 issues.Add($"ne se termine pas par {CustomRepositorySuffix}");
 
-            details.Add($"{t.FullName} - {string.Join(", ", issues)}");
-        });
+            if (issues.Count > 0)
+                details.Add($"{t.FullName} - {string.Join(", ", issues)}");
+        }
 
         Assert.True(
             details.Count == 0,
