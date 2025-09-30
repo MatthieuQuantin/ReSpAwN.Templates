@@ -11,12 +11,20 @@ public sealed class Person : EntityBase<PersonId>, IAggregateRoot
     public IEnumerable<Contact> Contacts => _contacts.AsReadOnly();
 
 #pragma warning disable CS8618 // Un champ non-nullable doit contenir une valeur autre que Null lors de la fermeture du constructeur. Envisagez d’ajouter le modificateur « required » ou de déclarer le champ comme pouvant accepter la valeur Null.
+    /// <summary>
+    /// Constructeur privé pour EF Core
+    /// </summary>
     private Person()
     {
         // Required by EF Core for deserialization
     }
 #pragma warning restore CS8618 // Un champ non-nullable doit contenir une valeur autre que Null lors de la fermeture du constructeur. Envisagez d’ajouter le modificateur « required » ou de déclarer le champ comme pouvant accepter la valeur Null.
 
+    /// <summary>
+    /// Constructeur privé pour forcer l'utilisation de la méthode Create
+    /// </summary>
+    /// <param name="firstName"></param>
+    /// <param name="lastName"></param>
     private Person(PersonFirstName firstName, PersonLastName lastName)
     {
         Id = PersonId.From(Guid.NewGuid());
@@ -27,16 +35,18 @@ public sealed class Person : EntityBase<PersonId>, IAggregateRoot
         base.RegisterDomainEvent(@event);
     }
 
+    /// <summary>
+    /// Permet la création d'une personne
+    /// </summary>
+    /// <remarks>
+    /// La création déclenchera un événement PersonCreatedEvent
+    /// </remarks>
+    /// <param name="firstName"></param>
+    /// <param name="lastName"></param>
+    /// <returns></returns>
     public static Result<Person> Create(PersonFirstName firstName, PersonLastName lastName)
     {
-
-        List<ValidationError> validationErrors = [];
-
-        if (firstName is null)
-            validationErrors.Add(new ValidationError(nameof(firstName), "Le prénom de la personne ne peut pas être null."));
-
-        if (lastName is null)
-            validationErrors.Add(new ValidationError(nameof(lastName), "Le nom de la personne ne peut pas être null."));
+        var validationErrors = Validation(firstName, lastName);
 
         if (validationErrors.Count != 0)
             return Result<Person>.Invalid(validationErrors);
@@ -44,15 +54,18 @@ public sealed class Person : EntityBase<PersonId>, IAggregateRoot
         return Result.Created(new Person(firstName, lastName));
     }
 
+    /// <summary>
+    /// Permet la mise à jour d'une personne
+    /// </summary>
+    /// <remarks>
+    /// La mise à jour déclenchera un événement PersonUpdatedEvent
+    /// </remarks>
+    /// <param name="newFirstName"></param>
+    /// <param name="newLastName"></param>
+    /// <returns></returns>
     public Result Update(PersonFirstName newFirstName, PersonLastName newLastName)
     {
-        List<ValidationError> validationErrors = [];
-
-        if (newFirstName is null)
-            validationErrors.Add(new ValidationError(nameof(newFirstName), "Le nouveau prénom ne peut pas être null."));
-
-        if (newLastName is null)
-            validationErrors.Add(new ValidationError(nameof(newLastName), "Le nouveau nom ne peut pas être null."));
+        var validationErrors = Validation(newFirstName, newLastName);
 
         if (validationErrors.Count != 0)
             return Result.Invalid(validationErrors);
@@ -72,6 +85,33 @@ public sealed class Person : EntityBase<PersonId>, IAggregateRoot
         return Result.Success();
     }
 
+    /// <summary>
+    /// Vérifie les règles de validation de la personne
+    /// </summary>
+    /// <param name="firstName"></param>
+    /// <param name="lastName"></param>
+    /// <returns></returns>
+    private static List<ValidationError> Validation(PersonFirstName firstName, PersonLastName lastName)
+    {
+        List<ValidationError> validationErrors = [];
+
+        if (firstName is null)
+            validationErrors.Add(new ValidationError(nameof(firstName), "Le prénom de la personne ne peut pas être null."));
+
+        if (lastName is null)
+            validationErrors.Add(new ValidationError(nameof(lastName), "Le nom de la personne ne peut pas être null."));
+
+        return validationErrors;
+    }
+
+    /// <summary>
+    /// Ajoute un contact à la personne
+    /// </summary>
+    /// <remarks>
+    /// L'ajout d'un contact déclenchera un événement ContactAddedToPersonEvent
+    /// </remarks>
+    /// <param name="email"></param>
+    /// <returns></returns>
     public Result<Contact> AddContact(Email email)
     {
         if (_contacts.Any(c => c.Email.Equals(email)))
@@ -91,6 +131,15 @@ public sealed class Person : EntityBase<PersonId>, IAggregateRoot
         return contact;
     }
 
+    /// <summary>
+    /// Permet la mise à jour de l'email d'un contact
+    /// </summary>
+    /// <remarks>
+    /// La mise à jour déclenchera un événement ContactUpdatedEvent
+    /// </remarks>
+    /// <param name="contactId"></param>
+    /// <param name="newEmail"></param>
+    /// <returns></returns>
     public Result UpdateContact(ContactId contactId, Email newEmail)
     {
         var contact = _contacts.FirstOrDefault(c => c.Id == contactId);
@@ -109,6 +158,14 @@ public sealed class Person : EntityBase<PersonId>, IAggregateRoot
         return Result.Success();
     }
 
+    /// <summary>
+    /// Supprime un contact de la personne
+    /// </summary>
+    /// <remarks>
+    /// La suppression déclenchera un événement ContactDeletedEvent
+    /// </remarks>
+    /// <param name="contactId"></param>
+    /// <returns></returns>
     public Result DeleteContact(ContactId contactId)
     {
         var contact = _contacts.FirstOrDefault(c => c.Id == contactId);

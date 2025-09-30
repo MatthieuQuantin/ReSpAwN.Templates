@@ -22,7 +22,7 @@ internal sealed class CreatePersonContactHandler(IModuleNameRepository<Person> r
             if (person is null)
                 return Result<ContactResult>.NotFound($"La personne '{request.PersonId}' n'a pas été trouvée");
 
-            var emailCreateResult = Email.Create(request.Email);
+            var emailCreateResult = Email.From(request.Email);
             if (emailCreateResult.IsInvalid())
                 return Result<ContactResult>.Invalid(emailCreateResult.ValidationErrors);
 

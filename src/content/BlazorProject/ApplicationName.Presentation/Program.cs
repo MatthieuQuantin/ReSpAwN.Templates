@@ -1,3 +1,4 @@
+using ApplicationName.Presentation.Blazor;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
@@ -57,7 +58,7 @@ public static class Program
         // Configurer le pipeline HTTP.
         if (!app.Environment.IsDevelopment())
         {
-            app.UseExceptionHandler("/Error");
+            app.UseExceptionHandler(NavRoutes.Error);
 
             // HSTS est un mécanisme de sécurité qui force les clients à utiliser uniquement HTTPS.
             // La valeur par défaut de HSTS est de 30 jours. Vous pouvez vouloir changer cela pour les scénarios de production, voir https://aka.ms/aspnetcore-hsts.

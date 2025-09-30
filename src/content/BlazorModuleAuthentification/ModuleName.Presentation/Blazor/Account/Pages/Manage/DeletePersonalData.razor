@@ -1,5 +1,3 @@
-@page "/Account/Manage/DeletePersonalData"
-
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Identity
 
@@ -8,6 +6,8 @@
 @inject IdentityUserAccessor UserAccessor
 @inject IdentityRedirectManager RedirectManager
 @inject ILogger<DeletePersonalData> Logger
+
+@attribute [Route(NavRoutes.AccountManageDeletePersonalData)]
 
 <PageTitle>Delete Personal Data</PageTitle>
 

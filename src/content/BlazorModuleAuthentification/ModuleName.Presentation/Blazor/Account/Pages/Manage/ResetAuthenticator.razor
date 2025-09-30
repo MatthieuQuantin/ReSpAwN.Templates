@@ -1,5 +1,3 @@
-@page "/Account/Manage/ResetAuthenticator"
-
 @using Microsoft.AspNetCore.Identity
 
 @inject UserManager<ApplicationUser> UserManager
@@ -7,6 +5,8 @@
 @inject IdentityUserAccessor UserAccessor
 @inject IdentityRedirectManager RedirectManager
 @inject ILogger<ResetAuthenticator> Logger
+
+@attribute [Route(NavRoutes.AccountManageResetAuthenticator)]
 
 <PageTitle>Reset authenticator key</PageTitle>
 
@@ -44,7 +44,7 @@
         await SignInManager.RefreshSignInAsync(user);
 
         RedirectManager.RedirectToWithStatus(
-            "Account/Manage/EnableAuthenticator",
+            NavRoutes.AccountManageEnableAuthenticator,
             "Your authenticator app key has been reset, you will need to configure your authenticator app using the new key.",
             HttpContext);
     }

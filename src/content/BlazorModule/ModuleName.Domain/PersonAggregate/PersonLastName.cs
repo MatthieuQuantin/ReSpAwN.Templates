@@ -19,7 +19,7 @@ public sealed class PersonLastName : ValueObject
         Value = value;
     }
 
-    public static Result<PersonLastName> Create(string value)
+    public static Result<PersonLastName> From(string value)
     {
         var tmpValue = value?.Trim();
 

@@ -16,7 +16,7 @@ public sealed class Email : ValueObject
         Value = value;
     }
 
-    public static Result<Email> Create(string value)
+    public static Result<Email> From(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             return Result<Email>.Invalid(new ValidationError(nameof(value), "L'email ne peut pas être vide ou null."));

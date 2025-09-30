@@ -21,11 +21,11 @@ internal sealed class CreatePersonHandler(IUnitOfWork unitOfWork, IModuleNameRep
             if (_validator.Validate(request) is { IsValid: false } validationResult)
                 return Result<PersonResult>.Invalid(validationResult.AsErrors());
 
-            var personFirstNameCreateResult = PersonFirstName.Create(request.FirstName);
+            var personFirstNameCreateResult = PersonFirstName.From(request.FirstName);
             if (personFirstNameCreateResult.IsInvalid())
                 return Result.Invalid(personFirstNameCreateResult.ValidationErrors);
 
-            var personLastNameCreateResult = PersonLastName.Create(request.LastName);
+            var personLastNameCreateResult = PersonLastName.From(request.LastName);
             if (personLastNameCreateResult.IsInvalid())
                 return Result.Invalid(personLastNameCreateResult.ValidationErrors);
 

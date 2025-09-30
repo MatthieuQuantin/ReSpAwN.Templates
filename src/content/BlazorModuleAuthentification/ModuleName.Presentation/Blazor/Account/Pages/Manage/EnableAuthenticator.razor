@@ -1,5 +1,3 @@
-@page "/Account/Manage/EnableAuthenticator"
-
 @using System.ComponentModel.DataAnnotations
 @using System.Globalization
 @using System.Text
@@ -11,6 +9,8 @@
 @inject UrlEncoder UrlEncoder
 @inject IdentityRedirectManager RedirectManager
 @inject ILogger<EnableAuthenticator> Logger
+
+@attribute [Route(NavRoutes.AccountManageEnableAuthenticator)]
 
 <PageTitle>Configure authenticator app</PageTitle>
 
@@ -113,7 +113,7 @@ else
         }
         else
         {
-            RedirectManager.RedirectToWithStatus("Account/Manage/TwoFactorAuthentication", message, HttpContext);
+            RedirectManager.RedirectToWithStatus(NavRoutes.AccountManageTwoFactorAuthentication, message, HttpContext);
         }
     }
 

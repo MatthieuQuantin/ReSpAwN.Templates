@@ -17,7 +17,7 @@ internal sealed class CreateSampleHandler(IApplicationNameRepository<Sample> rep
             if (_validator.Validate(request) is { IsValid: false } validationResult)
                 return Result<SampleResult>.Invalid(validationResult.AsErrors());
 
-            var sampleCreateResult = Sample.Create();
+            var sampleCreateResult = Sample.Create(request.Name);
             if (sampleCreateResult.IsInvalid())
                 return Result<SampleResult>.Invalid(sampleCreateResult.ValidationErrors);
 

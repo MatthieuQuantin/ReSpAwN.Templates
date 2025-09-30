@@ -13,7 +13,7 @@ public class ApplicationArchitectureTests : BaseArchitectureTests
     //public void Application_Should_Only_Have_Dependencies_On_System_And_Domain()
     //{
     //    var result = Types.InAssembly(ApplicationAssembly)
-    //        .That().ResideInNamespace(ApplicationAssemblyName)
+    //        .That().HaveNameStartingWith(ApplicationAssemblyName, StringComparison.Ordinal)
     //        .Should().OnlyHaveDependenciesOn("System", DomainAssemblyName, $"{DomainAssemblyName}.*", ApplicationAssemblyName, $"{ApplicationAssemblyName}.*")
     //        .GetResult();
 

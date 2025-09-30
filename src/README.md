@@ -1,3 +1,5 @@
+![NuGet Version](https://img.shields.io/nuget/v/ReSpAwN.Templates) ![NuGet Downloads](https://img.shields.io/nuget/dt/ReSpAwN.Templates)
+
 ![ReSpAwN - Blazor Templates for .NET 9](banner.png)
 
 **EN** - Blazor templates (module + project) for .NET 9

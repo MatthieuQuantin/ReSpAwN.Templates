@@ -13,7 +13,7 @@ public class InfrastructureArchitectureTests : BaseArchitectureTests
     //public void Infrastructure_Should_Only_Have_Dependencies_On_Allowed_Layers()
     //{
     //    var result = Types.InAssembly(InfrastructureAssembly)
-    //        .That().ResideInNamespace(InfrastructureAssemblyName)
+    //        .That().HaveNameStartingWith(InfrastructureAssemblyName, StringComparison.Ordinal)
     //        .Should().OnlyHaveDependenciesOn(
     //            "System",
     //            DomainAssemblyName,
