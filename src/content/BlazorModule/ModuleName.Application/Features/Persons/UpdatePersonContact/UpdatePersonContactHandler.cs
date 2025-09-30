@@ -21,7 +21,7 @@ internal sealed class UpdatePersonContactHandler(IModuleNameRepository<Person> r
             if (person is null)
                 return Result.NotFound($"La personne '{request.PersonId}' n'a pas été trouvée");
 
-            var emailCreateResult = Email.Create(request.Email);
+            var emailCreateResult = Email.From(request.Email);
             if (emailCreateResult.IsInvalid())
                 return Result.Invalid(emailCreateResult.ValidationErrors);
 

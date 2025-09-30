@@ -15,13 +15,13 @@ internal sealed class PersonConfiguration : IEntityTypeConfiguration<Person>
         builder.Property(x => x.FirstName)
             .HasConversion(
             v => v.Value,
-            v => PersonFirstName.Create(v).Value)
+            v => PersonFirstName.From(v).Value)
             .IsRequired();
 
         builder.Property(x => x.LastName)
             .HasConversion(
             v => v.Value,
-            v => PersonLastName.Create(v).Value)
+            v => PersonLastName.From(v).Value)
             .IsRequired();
 
         builder.Navigation(x => x.Contacts).Metadata.SetField("_contacts");

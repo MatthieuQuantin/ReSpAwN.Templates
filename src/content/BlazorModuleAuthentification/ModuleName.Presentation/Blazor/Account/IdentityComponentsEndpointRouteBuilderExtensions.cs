@@ -1,5 +1,3 @@
-using System.Security.Claims;
-using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -11,8 +9,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using ModuleName.Domain.ApplicationUserAggregate;
+using ModuleName.Presentation.Blazor;
 using ModuleName.Presentation.Blazor.Account.Pages;
 using ModuleName.Presentation.Blazor.Account.Pages.Manage;
+using System.Security.Claims;
+using System.Text.Json;
 
 namespace Microsoft.AspNetCore.Routing;
 
@@ -37,7 +38,7 @@ internal static class IdentityComponentsEndpointRouteBuilderExtensions
 
             var redirectUrl = UriHelper.BuildRelative(
                 context.Request.PathBase,
-                "/Account/ExternalLogin",
+                NavRoutes.AccountExternalLogin,
                 QueryString.Create(query));
 
             var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
@@ -65,7 +66,7 @@ internal static class IdentityComponentsEndpointRouteBuilderExtensions
 
             var redirectUrl = UriHelper.BuildRelative(
                 context.Request.PathBase,
-                "/Account/Manage/ExternalLogins",
+                NavRoutes.AccountManageExternalLogins,
                 QueryString.Create("Action", ExternalLogins.LinkLoginCallbackAction));
 
             var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, signInManager.UserManager.GetUserId(context.User));

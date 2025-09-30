@@ -21,11 +21,11 @@ internal sealed class UpdatePersonHandler(IModuleNameRepository<Person> reposito
             if (person is null)
                 return Result.NotFound($"La personne '{request.Id}' n'a pas été trouvée");
 
-            var personFirstNameResult = PersonFirstName.Create(request.LastName);
+            var personFirstNameResult = PersonFirstName.From(request.LastName);
             if (personFirstNameResult.IsInvalid())
                 return Result.Invalid(personFirstNameResult.ValidationErrors);
 
-            var personLastNameResult = PersonLastName.Create(request.LastName);
+            var personLastNameResult = PersonLastName.From(request.LastName);
             if (personLastNameResult.IsInvalid())
                 return Result.Invalid(personLastNameResult.ValidationErrors);
 

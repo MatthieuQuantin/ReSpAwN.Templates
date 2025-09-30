@@ -16,7 +16,7 @@ internal sealed class ContactConfiguration : IEntityTypeConfiguration<Contact>
         builder.Property(x => x.Email)
             .HasConversion(
             v => v.Value,
-            v => Email.Create(v).Value)
+            v => Email.From(v).Value)
             .IsRequired();
     }
 }

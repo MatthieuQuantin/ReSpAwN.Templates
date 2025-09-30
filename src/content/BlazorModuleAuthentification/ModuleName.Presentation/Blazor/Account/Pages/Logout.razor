@@ -1,9 +1,9 @@
-@page "/Account/Logout"
-
 @using Microsoft.AspNetCore.Identity
 
 @inject NavigationManager NavigationManager
 @inject SignInManager<ApplicationUser> SignInManager
+
+@attribute [Route(NavRoutes.AccountLogout)]
 
 @code {
     protected override async Task OnInitializedAsync()
