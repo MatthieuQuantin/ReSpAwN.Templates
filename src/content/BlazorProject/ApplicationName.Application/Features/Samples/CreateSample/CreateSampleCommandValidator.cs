@@ -4,5 +4,6 @@ internal sealed class CreateSampleCommandValidator : AbstractValidator<CreateSam
 {
     public CreateSampleCommandValidator()
     {
+        RuleFor(c => c.Name).NotEmpty();
     }
 }

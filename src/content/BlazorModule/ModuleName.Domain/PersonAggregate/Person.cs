@@ -1,4 +1,5 @@
-﻿using ModuleName.Domain.Contracts.PersonAggregate.Events;
+﻿using MediatR;
+using ModuleName.Domain.Contracts.PersonAggregate.Events;
 
 namespace ModuleName.Domain.PersonAggregate;
 
@@ -6,6 +7,7 @@ public sealed class Person : EntityBase<PersonId>, IAggregateRoot
 {
     public PersonFirstName FirstName { get; private set; }
     public PersonLastName LastName { get; private set; }
+
 
     private readonly List<Contact> _contacts = [];
     public IEnumerable<Contact> Contacts => _contacts.AsReadOnly();
@@ -44,14 +46,22 @@ public sealed class Person : EntityBase<PersonId>, IAggregateRoot
     /// <param name="firstName"></param>
     /// <param name="lastName"></param>
     /// <returns></returns>
-    public static Result<Person> Create(PersonFirstName firstName, PersonLastName lastName)
+    public static Result<Person> Create(string firstName, string lastName)
     {
-        var validationErrors = Validation(firstName, lastName);
+        List<ValidationError> validationErrors = [];
+
+        var personFirstNameResult = PersonFirstName.From(firstName);
+        if (personFirstNameResult.IsInvalid())
+            validationErrors.AddRange(personFirstNameResult.ValidationErrors);
+
+        var personLastNameResult = PersonLastName.From(lastName);
+        if (personLastNameResult.IsInvalid())
+            validationErrors.AddRange(personLastNameResult.ValidationErrors);
 
         if (validationErrors.Count != 0)
             return Result<Person>.Invalid(validationErrors);
 
-        return Result.Created(new Person(firstName, lastName));
+        return Result.Created(new Person(personFirstNameResult.Value, personLastNameResult.Value));
     }
 
     /// <summary>
@@ -60,48 +70,37 @@ public sealed class Person : EntityBase<PersonId>, IAggregateRoot
     /// <remarks>
     /// La mise à jour déclenchera un événement PersonUpdatedEvent
     /// </remarks>
-    /// <param name="newFirstName"></param>
-    /// <param name="newLastName"></param>
+    /// <param name="firstName"></param>
+    /// <param name="lastName"></param>
     /// <returns></returns>
-    public Result Update(PersonFirstName newFirstName, PersonLastName newLastName)
+    public Result Update(string firstName, string lastName)
     {
-        var validationErrors = Validation(newFirstName, newLastName);
+        List<ValidationError> validationErrors = [];
+
+        var personFirstNameResult = PersonFirstName.From(firstName);
+        if (personFirstNameResult.IsInvalid())
+            validationErrors.AddRange(personFirstNameResult.ValidationErrors);
+
+        var personLastNameResult = PersonLastName.From(lastName);
+        if (personLastNameResult.IsInvalid())
+            validationErrors.AddRange(personLastNameResult.ValidationErrors);
 
         if (validationErrors.Count != 0)
             return Result.Invalid(validationErrors);
 
-        if (FirstName.Equals(newFirstName) && LastName.Equals(newLastName))
+        if (FirstName.Equals(personFirstNameResult.Value) && LastName.Equals(personLastNameResult.Value))
             return Result.Success();
 
         var oldFirstName = FirstName;
-        FirstName = newFirstName;
+        FirstName = personFirstNameResult.Value;
 
         var oldLastName = LastName;
-        LastName = newLastName;
+        LastName = personLastNameResult.Value;
 
-        var @event = new PersonUpdatedEvent(Id.Value, oldFirstName.Value, newFirstName.Value, oldLastName.Value, newLastName.Value);
+        var @event = new PersonUpdatedEvent(Id.Value, oldFirstName.Value, FirstName.Value, oldLastName.Value, LastName.Value);
         base.RegisterDomainEvent(@event);
 
         return Result.Success();
-    }
-
-    /// <summary>
-    /// Vérifie les règles de validation de la personne
-    /// </summary>
-    /// <param name="firstName"></param>
-    /// <param name="lastName"></param>
-    /// <returns></returns>
-    private static List<ValidationError> Validation(PersonFirstName firstName, PersonLastName lastName)
-    {
-        List<ValidationError> validationErrors = [];
-
-        if (firstName is null)
-            validationErrors.Add(new ValidationError(nameof(firstName), "Le prénom de la personne ne peut pas être null."));
-
-        if (lastName is null)
-            validationErrors.Add(new ValidationError(nameof(lastName), "Le nom de la personne ne peut pas être null."));
-
-        return validationErrors;
     }
 
     /// <summary>
@@ -112,16 +111,17 @@ public sealed class Person : EntityBase<PersonId>, IAggregateRoot
     /// </remarks>
     /// <param name="email"></param>
     /// <returns></returns>
-    public Result<Contact> AddContact(Email email)
+    public Result<Contact> AddContact(string email)
     {
-        if (_contacts.Any(c => c.Email.Equals(email)))
-            return Result<Contact>.Invalid(new ValidationError(nameof(email), "Cet email est déjà utilisé par un autre contact."));
+        var emailResult = Email.From(email);
+        if (emailResult.IsInvalid())
+            return Result.Invalid(emailResult.ValidationErrors);
 
-        var contactCreateResult = Contact.Create(email);
-        if (contactCreateResult.IsInvalid())
-            return Result<Contact>.Invalid(contactCreateResult.ValidationErrors);
+        var contactResult = Contact.Create(email);
+        if (contactResult.IsInvalid())
+            return Result.Invalid(contactResult.ValidationErrors);
 
-        var contact = contactCreateResult.Value;
+        var contact = contactResult.Value;
 
         _contacts.Add(contact);
 
@@ -140,20 +140,18 @@ public sealed class Person : EntityBase<PersonId>, IAggregateRoot
     /// <param name="contactId"></param>
     /// <param name="newEmail"></param>
     /// <returns></returns>
-    public Result UpdateContact(ContactId contactId, Email newEmail)
+    public Result UpdateContact(ContactId contactId, string email)
     {
         var contact = _contacts.FirstOrDefault(c => c.Id == contactId);
 
         if (contact is null)
             return Result.NotFound($"Le contact '{contactId.Value}' n'a pas été trouvée");
 
-        if (newEmail is null)
-            return Result.Invalid(new ValidationError(nameof(newEmail), "L'email du contact ne peut pas être null."));
+        var normalizedEmail = Email.Normalize(email);
+        if (_contacts.Any(c => c.Email.Equals(normalizedEmail) && !c.Id.Equals(contactId)))
+            return Result.Invalid(new ValidationError(nameof(email), "Cet email est déjà utilisé par un autre contact."));
 
-        if (_contacts.Any(c => c.Email.Equals(newEmail) && !c.Id.Equals(contactId)))
-            return Result.Invalid(new ValidationError(nameof(newEmail), "Cet email est déjà utilisé par un autre contact."));
-
-        contact.Update(newEmail);
+        contact.Update(email);
 
         return Result.Success();
     }

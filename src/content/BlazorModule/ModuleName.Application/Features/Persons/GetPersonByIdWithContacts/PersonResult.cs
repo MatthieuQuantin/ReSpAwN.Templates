@@ -1,3 +1,3 @@
-﻿namespace ModuleName.Application.Features.Persons.GetPersonById;
+﻿namespace ModuleName.Application.Features.Persons.GetPersonByIdWithContacts;
 
 public sealed record PersonResult(Guid Id, string FirstName, string LastName, IReadOnlyList<ContactResult> Contacts);

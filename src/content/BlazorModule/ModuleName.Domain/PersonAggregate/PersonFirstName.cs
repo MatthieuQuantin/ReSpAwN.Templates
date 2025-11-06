@@ -2,8 +2,8 @@
 
 public sealed class PersonFirstName : ValueObject
 {
-    public const int MinLength = 2;
-    public const int MaxLength = 100;
+    public const int MIN_LENGTH = 2;
+    public const int MAX_LENGTH = 100;
 
     public string Value { get; private set; }
 
@@ -21,15 +21,14 @@ public sealed class PersonFirstName : ValueObject
 
     public static Result<PersonFirstName> From(string value)
     {
-        var tmpValue = value?.Trim();
+        if (string.IsNullOrWhiteSpace(value))
+            return Result.Invalid(new ValidationError(nameof(value), "Le prénom ne peut pas être vide ou null."));
 
-        if (string.IsNullOrWhiteSpace(tmpValue))
-            return Result<PersonFirstName>.Invalid(new ValidationError("Le prénom ne peut pas être vide ou null."));
+        value = value.Trim();
+        if (value.Length <= MIN_LENGTH || value.Length >= MAX_LENGTH)
+            return Result.Invalid(new ValidationError(nameof(value), $"Le prénom doit contenir entre {MIN_LENGTH} et {MAX_LENGTH} caractères."));
 
-        if (tmpValue.Length < MinLength || tmpValue.Length > MaxLength)
-            return Result<PersonFirstName>.Invalid(new ValidationError($"Le prénom doit contenir entre {MinLength} et {MaxLength} caractères."));
-
-        return Result.Created(new PersonFirstName(tmpValue));
+        return Result.Created(new PersonFirstName(value));
     }
 
     protected override IEnumerable<object> GetEqualityComponents()
