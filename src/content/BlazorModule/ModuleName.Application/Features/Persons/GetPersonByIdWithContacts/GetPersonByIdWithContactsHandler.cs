@@ -1,0 +1,32 @@
+﻿using ModuleName.Application.Features.Persons.GetPersonByIdWithContacts.Specifications;
+using ModuleName.Application.Interfaces.Persistence.Repositories;
+using ModuleName.Domain.PersonAggregate;
+
+namespace ModuleName.Application.Features.Persons.GetPersonByIdWithContacts;
+
+internal sealed class GetPersonByIdWithContactsHandler(IModuleNameReadRepository<Person> repository, IValidator<GetPersonByIdWithContactsQuery> validator, ILogger<GetPersonByIdWithContactsHandler> logger)
+    : IQueryHandler<GetPersonByIdWithContactsQuery, Result<PersonResult>>
+{
+    public async Task<Result<PersonResult>> Handle(GetPersonByIdWithContactsQuery request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (validator.Validate(request) is { IsValid: false } validationResult)
+                return Result<PersonResult>.Invalid(validationResult.AsErrors());
+
+            var person = await repository.SingleOrDefaultAsync(new PersonByIdWithContactsSpecification(PersonId.From(request.Id)), cancellationToken);
+            if (person is null)
+            {
+                logger.LogWarning("La personne '{PersonId}' n'a pas été trouvée", request.Id);
+                return Result.NotFound($"La personne '{request.Id}' n'a pas été trouvée");
+            }
+
+            return person;
+        }
+        catch (Exception exception)
+        {
+            logger.LogError(exception, "Une erreur est survenue lors de la récupération de la personne avec l'Id {PersonId}", request.Id);
+            return Result<PersonResult>.Error($"Une erreur est survenue lors de la récupération de la personne avec l'Id {request.Id}");
+        }
+    }
+}

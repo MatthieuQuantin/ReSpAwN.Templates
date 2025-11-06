@@ -67,6 +67,8 @@ public static class Program
 
         app.UseHttpsRedirection();
 
+        app.UseApplicationName();
+
         app.MapApplicationName();
 
         app.Run();

@@ -46,7 +46,12 @@ public static class DependencyInjection
         return services;
     }
 
-    public static WebApplication MapModuleName(this WebApplication builder)
+    public static IApplicationBuilder UseModuleName(this IApplicationBuilder builder)
+    {
+        return builder;
+    }
+
+    public static IEndpointRouteBuilder MapModuleName(this IEndpointRouteBuilder builder)
     {
         builder
             .MapAdditionalIdentityEndpoints();

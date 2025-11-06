@@ -39,8 +39,11 @@ public static class DependencyInjection
         return services;
     }
 
-    public static WebApplication MapApplicationName(this WebApplication builder)
+    public static IApplicationBuilder UseApplicationName(this IApplicationBuilder builder)
     {
+        builder
+            .UseRouting();
+
         #region Pour l'authentification et l'autorisation des utilisateurs (Identity)
 
         //builder
@@ -52,6 +55,14 @@ public static class DependencyInjection
         builder
             .UseAntiforgery();
 
+        //builder
+        //    .UseModuleName();
+
+        return builder;
+    }
+
+    public static IEndpointRouteBuilder MapApplicationName(this IEndpointRouteBuilder builder)
+    {
         builder
             .MapStaticAssets();
 
@@ -61,7 +72,7 @@ public static class DependencyInjection
         builder
             .MapRazorComponents<App>()
             .AddInteractiveServerRenderMode();
-            //.AddModuleNameComponents();
+            //.MapModuleNameComponents();
 
         return builder;
     }

@@ -21,11 +21,16 @@ public sealed class Email : ValueObject
         if (string.IsNullOrWhiteSpace(value))
             return Result<Email>.Invalid(new ValidationError(nameof(value), "L'email ne peut pas être vide ou null."));
 
-        value = value.Trim().ToLowerInvariant();
+        value = Normalize(value);
 
         //TODO : voir pour ajouter un controle de la qualité de l'email (regex, etc.)
 
         return Result.Created(new Email(value));
+    }
+
+    public static string Normalize(string value)
+    {
+        return value.Trim().ToLowerInvariant();
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

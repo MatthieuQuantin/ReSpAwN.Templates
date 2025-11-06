@@ -1,5 +1,4 @@
 ﻿using ApplicationName.Domain.Contracts.SampleAggregate.Events;
-using System;
 
 namespace ApplicationName.Domain.SampleAggregate;
 
@@ -28,21 +27,14 @@ public sealed class Sample : EntityBase<SampleId>, IAggregateRoot
 
     public static Result<Sample> Create(string name)
     {
-        var validationErrors = Validation(name);
-
-        if (validationErrors.Count != 0)
-            return Result<Sample>.Invalid(validationErrors);
-
-        return Result.Created(new Sample(name.Trim()));
-    }
-
-    private static List<ValidationError> Validation(string name)
-    {
         List<ValidationError> validationErrors = [];
 
         if (string.IsNullOrWhiteSpace(name))
             validationErrors.Add(new ValidationError(nameof(name), "Name cannot be empty"));
 
-        return validationErrors;
+        if (validationErrors.Count != 0)
+            return Result<Sample>.Invalid(validationErrors);
+
+        return Result.Created(new Sample(name.Trim()));
     }
 }

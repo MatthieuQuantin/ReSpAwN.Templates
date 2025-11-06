@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,7 +29,12 @@ public static class DependencyInjection
         return services;
     }
 
-    public static WebApplication MapModuleName(this WebApplication builder)
+    public static IApplicationBuilder UseModuleName(this IApplicationBuilder builder)
+    {
+        return builder;
+    }
+
+    public static IEndpointRouteBuilder MapModuleName(this IEndpointRouteBuilder builder)
     {
         return builder;
     }

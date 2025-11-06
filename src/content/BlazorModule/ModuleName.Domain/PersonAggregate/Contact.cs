@@ -22,23 +22,22 @@ public sealed class Contact : EntityBase<ContactId>
         base.RegisterDomainEvent(@event);
     }
 
-    public static Result<Contact> Create(Email email)
+    public static Result<Contact> Create(string email)
     {
-        if (email is null)
-            return Result<Contact>.Invalid(new ValidationError(nameof(email), "L'email du contact ne peut pas être vide ou null."));
+        var emailResult = Email.From(email);
+        if (emailResult.IsInvalid())
+            return Result.Invalid(emailResult.ValidationErrors);
 
-        return Result.Created(new Contact(email));
+        return Result.Created(new Contact(emailResult.Value));
     }
 
-    internal Result Update(Email newEmail)
+    internal Result Update(string email)
     {
-        List<ValidationError> validationErrors = [];
+        var emailResult = Email.From(email);
+        if (emailResult.IsInvalid())
+            return Result.Invalid(emailResult.ValidationErrors);
 
-        if (newEmail is null)
-            validationErrors.Add(new ValidationError(nameof(newEmail), "Le nouvel email ne peut pas être null."));
-
-        if (validationErrors.Count != 0)
-            return Result.Invalid(validationErrors);
+        var newEmail = emailResult.Value;
 
         if (Email.Equals(newEmail))
             return Result.Success();
