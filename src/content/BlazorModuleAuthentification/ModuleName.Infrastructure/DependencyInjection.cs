@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using ApplicationName.SharedKernel.Application.Persistence;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,6 +13,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
     {
+        services
+            .AddScoped<IUnitOfWork, EfUnitOfWork>();
+
         services
             .AddDbContext<ModuleNameDbContext>(ServiceLifetime.Scoped);
 

@@ -10,11 +10,54 @@
 
   "classifications": [
     "Blazor",
-    ".NET 9"
+    ".NET 9",
+    "Modular",
+    "Application",
+    "Web",
+    "Clean Architecture",
+    "DDD",
+    "Starter",
+    "Boilerplate"
   ],
   "tags": {
     "language": "C#",
     "type": "project"
+  },
+
+  "symbols": {
+    // 1. Symbole de base (laisse 'ApplicationName' géré par 'sourceName')
+    "OriginalName": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "MyProject"
+    },
+
+    // 2. Symbole dérivé pour le kebab-case (application-name)
+    "ApplicationKebabCase": {
+      "type": "derived",
+      "valueSource": "OriginalName",
+      "replaces": "application-name",
+      "valueTransform": "KebabCase",
+      "modifiers": [
+        {
+          "name": "kebab"
+        }
+      ]
+    },
+
+    // 3. Symbole dérivé pour le snake_case (application_name)
+    "ApplicationSnakeCase": {
+      "type": "derived",
+      "valueSource": "OriginalName",
+      "replaces": "application_name",
+      "valueTransform": "SnakeCase",
+      "modifiers": [
+        {
+          "name": "snake"
+        }
+      ]
+    }
   },
 
   "sources": [

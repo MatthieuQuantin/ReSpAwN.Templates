@@ -1,6 +1,7 @@
 ﻿using ApplicationName.Application.Interfaces.Persistence.Repositories;
+using ApplicationName.SharedKernel.Application.Persistence;
 
 namespace ApplicationName.Infrastructure.Persistence.Repositories;
 
-internal class EfRepository<T>(ApplicationNameDbContext dbContext) : RepositoryBase<T>(dbContext), IApplicationNameRepository<T>, IApplicationNameReadRepository<T> where T : class, IAggregateRoot
+internal class EfRepository<T>(ApplicationNameDbContext dbContext) : ARepository<T>(dbContext), IApplicationNameRepository<T>, IApplicationNameReadRepository<T> where T : class, IAggregateRoot
 { }

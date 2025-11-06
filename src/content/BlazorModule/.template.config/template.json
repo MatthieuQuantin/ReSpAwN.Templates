@@ -11,11 +11,52 @@
   "classifications": [
     "Blazor",
     ".NET 9",
-    "Modular"
+    "Module",
+    "Modular",
+    "Architecture",
+    "Clean Architecture",
+    "DDD",
+    "Library"
   ],
   "tags": {
     "language": "C#",
     "type": "project"
+  },
+
+  "symbols": {
+    // 1. Symbole de base (laisse 'ModuleName' géré par 'sourceName')
+    "OriginalName": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "MyModule"
+    },
+
+    // 2. Symbole dérivé pour le kebab-case (module-name)
+    "ModuleKebabCase": {
+      "type": "derived",
+      "valueSource": "OriginalName",
+      "replaces": "module-name",
+      "valueTransform": "KebabCase",
+      "modifiers": [
+        {
+          "name": "kebab"
+        }
+      ]
+    },
+
+    // 3. Symbole dérivé pour le snake_case (module_name)
+    "ModuleSnakeCase": {
+      "type": "derived",
+      "valueSource": "OriginalName",
+      "replaces": "module_name",
+      "valueTransform": "SnakeCase",
+      "modifiers": [
+        {
+          "name": "snake"
+        }
+      ]
+    }
   },
 
   "sources": [
