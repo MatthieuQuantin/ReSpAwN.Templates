@@ -1,0 +1,19 @@
+﻿@using System.Reflection
+
+<Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies="Assemblies">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" DefaultLayout="typeof(Shared.MainLayout)" />
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <LayoutView Layout="typeof(Shared.MainLayout)">
+            <p>Page introuvable.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+@code {
+    private static readonly Assembly[] Assemblies =
+    [
+        // typeof(ModuleName.Presentation.Blazor._Imports).Assembly
+    ];
+}

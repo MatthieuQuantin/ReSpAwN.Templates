@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Matthieu QUANTIN",
+  "identity": "ReSpAwN.BlazorModuleSmall.Template",
+  "name": "Blazor module small (multi-project)",
+  "description": "Creates a modular Blazor building block with multiple projects, renaming 'ModuleName' and regenerating project GUIDs.",
+  "shortName": "r-bzr-module-sm",
+  "sourceName": "ModuleName",
+  "preferNameDirectory": true,
+  "defaultName": "MyModule",
+
+  "classifications": [
+    "Blazor",
+    ".NET 9",
+    "Module",
+    "Modular",
+    "Architecture",
+    "Clean Architecture",
+    "DDD",
+    "Library"
+  ],
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+
+  "symbols": {
+    "ModuleKebabCase": {
+      "type": "derived",
+      "valueSource": "name",
+      "replaces": "module-name",
+      "valueTransform": "Kebab"
+    },
+
+    "ModuleSnakeCase": {
+      "type": "derived",
+      "valueSource": "ModuleKebabCase",
+      "replaces": "module_name",
+      "valueTransform": "Snake"
+    }
+  },
+
+  "forms": {
+    "Kebab": {
+      "identifier": "kebabCase"
+    },
+
+    "Snake": {
+      "identifier": "replace",
+      "source": "Kebab",
+      "pattern": "-",
+      "replacement": "_"
+    }
+  },
+
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            "**/[Bb]in/**",
+            "**/[Oo]bj/**",
+            "**/.git/**",
+            "**/.vs/**",
+            ".template.config/**",
+            "BlazorModule.sln"
+          ]
+        }
+      ]
+    }
+  ],
+
+  "guids": [
+    "D1912DA5-588F-4718-BC34-1099A05FE0D1",
+    "128CD8A7-0039-4B8D-622F-17E88909ECD1",
+    "CD7D85F9-705D-45AF-B94D-98147636E11F"
+  ],
+
+  "primaryOutputs": [
+    { "path": "ModuleName/ModuleName.csproj" },
+    { "path": "ModuleName.Contracts/ModuleName.Contracts.csproj" },
+    { "path": "ModuleName.Tests/ModuleName.Tests.csproj" }
+  ]
+}
