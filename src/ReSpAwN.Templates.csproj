@@ -4,7 +4,7 @@
 
 		<!-- Métadonnées NuGet -->
 		<PackageId>ReSpAwN.Templates</PackageId>
-		<Version>0.1.2</Version>
+		<Version>0.2.0</Version>
 		<Authors>ReSpAwN</Authors>
 		<Description>Blazor templates (module + project)</Description>
 		<PackageTags>dotnet-new;template;blazor</PackageTags>
@@ -25,8 +25,8 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>icon.png</PackageIcon>
-		 <PackageLicenseExpression>MIT</PackageLicenseExpression> 
-		 <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance> 
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
 
 	<!-- Inclure tout le contenu sous /content (et filtrer bin/obj) -->

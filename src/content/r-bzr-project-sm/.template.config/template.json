@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Matthieu QUANTIN",
+  "identity": "ReSpAwN.BlazorProjectSmall.Template",
+  "name": "Blazor project small (multi-project)",
+  "description": "Creates a modular Blazor building block with multiple projects, renaming 'ApplicationName' and regenerating project GUIDs.",
+  "shortName": "r-bzr-project-sm",
+  "sourceName": "ApplicationName",
+  "defaultName": "MyProject",
+  "preferNameDirectory": true,
+
+  "classifications": [
+    "Blazor",
+    ".NET 9",
+    "Modular",
+    "Application",
+    "Web",
+    "Clean Architecture",
+    "DDD",
+    "Starter",
+    "Boilerplate"
+  ],
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+
+  "symbols": {
+    "ApplicationKebabCase": {
+      "type": "derived",
+      "valueSource": "name",
+      "replaces": "application-name",
+      "valueTransform": "Kebab"
+    },
+
+    "ApplicationSnakeCase": {
+      "type": "derived",
+      "valueSource": "ApplicationKebabCase",
+      "replaces": "application_name",
+      "valueTransform": "Snake"
+    }
+  },
+
+  "forms": {
+    "Kebab": {
+      "identifier": "kebabCase"
+    },
+
+    "Snake": {
+      "identifier": "replace",
+      "source": "Kebab",
+      "pattern": "-",
+      "replacement": "_"
+    }
+  },
+
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            "**/[Bb]in/**",
+            "**/[Oo]bj/**",
+            "**/.git/**",
+            "**/.vs/**",
+            ".template.config/**",
+            "BlazorProject.sln"
+          ]
+        }
+      ]
+    }
+  ],
+
+  "guids": [
+    "AD773A78-64F6-41D3-8B51-5177FBD5DF93",
+    "BAC5549B-5E7A-47E2-A461-4DCCE96332C5",
+    "D649730E-C383-466B-AED3-125A3FFBE2F0",
+    "9C014E55-1011-D534-F85F-15181D467A81",
+    "522DEA4F-0B82-4DC0-AF4D-C3258AA7B6DB"
+  ],
+
+  "primaryOutputs": [
+    { "path": "ApplicationName/ApplicationName.csproj" },
+    { "path": "ApplicationName.Contracts/ApplicationName.Contracts.csproj" },
+    { "path": "ApplicationName.Design/ApplicationName.Design.csproj" },
+    { "path": "ApplicationName.SharedKernel/ApplicationName.SharedKernel.csproj" },
+    { "path": "ApplicationName.Tests/ApplicationName.Tests.csproj" }
+  ]
+}

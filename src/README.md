@@ -1,15 +1,16 @@
+![NuGet Version](https://img.shields.io/nuget/v/ReSpAwN.Templates) ![NuGet Downloads](https://img.shields.io/nuget/dt/ReSpAwN.Templates)
+
 ![ReSpAwN - Blazor Templates for .NET 9](banner.png)
 
-**EN** - Blazor templates (module + project) for .NET 9
-**FR** - Modèles Blazor (module + projet) pour .NET 9
+- Blazor templates (module + project) for .NET 9
 
 ---
 
-## EN
-
 ### Templates included
-- **r-blazor-project**: multi-project Blazor project
-- **r-blazor-module**: multi-project Blazor module
+- **r-bzr-project-sm**: multi-project Blazor project lightweight
+- **r-bzr-project-l**: multi-project Blazor project full
+- **r-bzr-module-sm**: multi-project Blazor module lightweight
+- **r-bzr-module-l**: multi-project Blazor module full
 - **r-blazor-auth-module**: multi-project Blazor module with authentication
 
 ### Install
