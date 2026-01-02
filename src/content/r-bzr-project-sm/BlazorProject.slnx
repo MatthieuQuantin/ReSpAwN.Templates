@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="ApplicationName.Contracts/ApplicationName.Contracts.csproj" />
+  <Project Path="ApplicationName.Design/ApplicationName.Design.csproj" />
+  <Project Path="ApplicationName.SharedKernel/ApplicationName.SharedKernel.csproj" />
+  <Project Path="ApplicationName.Tests/ApplicationName.Tests.csproj" />
+  <Project Path="ApplicationName/ApplicationName.csproj" />
+</Solution>

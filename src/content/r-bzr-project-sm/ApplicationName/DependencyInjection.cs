@@ -1,4 +1,5 @@
 ﻿using ApplicationName.Application;
+using ApplicationName.Design;
 using ApplicationName.Infrastructure;
 using ApplicationName.Presentation.Blazor;
 using ApplicationName.Presentation.EndPoints;
@@ -33,8 +34,9 @@ internal static class DependencyInjection
             .AddInfrastructure(configuration, environment)
             .AddEndPoints(configuration/*voir si utile  , environment*/);
 
-        //services
-        //    .AddModuleName(configuration, environment); // Module Auth Shared
+        services
+            .AddApplicationName_Design(configuration, environment);
+            //.AddModuleName(configuration, environment); // Module Auth Shared
 
         return services;
     }
@@ -55,8 +57,9 @@ internal static class DependencyInjection
         builder
             .UseAntiforgery();
 
-        //builder
-        //    .UseModuleName();
+        builder
+            .UseApplicationName_Design();
+            //.UseModuleName();
 
         return builder;
     }
@@ -66,12 +69,14 @@ internal static class DependencyInjection
         builder
             .MapStaticAssets();
 
-        //builder
-        //    .MapModuleName();
+        builder
+            .MapApplicationName_Design();
+            //.MapModuleName();
 
         builder
             .MapRazorComponents<App>()
-            .AddInteractiveServerRenderMode();
+            .AddInteractiveServerRenderMode()
+            .MapApplicationName_DesignComponents();
             //.MapModuleNameComponents();
 
         return builder;
