@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="../r-bzr-project-l/ApplicationName.SharedKernel/ApplicationName.SharedKernel.csproj" />
+  <Project Path="ModuleName.Application/ModuleName.Application.csproj" />
+  <Project Path="ModuleName.Domain.Contracts/ModuleName.Domain.Contracts.csproj" />
+  <Project Path="ModuleName.Domain/ModuleName.Domain.csproj" />
+  <Project Path="ModuleName.Infrastructure/ModuleName.Infrastructure.csproj" />
+  <Project Path="ModuleName.Presentation/ModuleName.Presentation.csproj" />
+  <Project Path="ModuleName.Tests/ModuleName.Tests.csproj" />
+</Solution>
