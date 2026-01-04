@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../r-bzr-project-sm/ApplicationName.SharedKernel/ApplicationName.SharedKernel.csproj" />
+  <Project Path="ModuleName.Contracts/ModuleName.Contracts.csproj" />
+  <Project Path="ModuleName.Tests/ModuleName.Tests.csproj" />
+  <Project Path="ModuleName/ModuleName.csproj" />
+</Solution>

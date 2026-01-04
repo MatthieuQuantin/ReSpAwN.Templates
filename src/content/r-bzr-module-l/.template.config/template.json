@@ -63,7 +63,8 @@
             "**/.git/**",
             "**/.vs/**",
             ".template.config/**",
-            "BlazorModule.sln"
+            "BlazorModule.sln",
+            "BlazorModule.slnx"
           ]
         }
       ]
