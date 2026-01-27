@@ -34,6 +34,8 @@ namespace ApplicationName
 
             #endregion
 
+            builder.WebHost.UseStaticWebAssets();
+
             // Ajouter les services personnalisés.
             builder.Services.AddApplicationName(builder.Configuration, builder.Environment);
 

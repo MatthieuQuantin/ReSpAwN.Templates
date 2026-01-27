@@ -15,9 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BootstrapBlazor" Version="10.2.0" />
+    <PackageReference Include="BootstrapBlazor" Version="10.2.3" />
     <PackageReference Include="BootstrapBlazor.BootstrapIcon" Version="10.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.12" />
   </ItemGroup>
 
 </Project>
