@@ -14,19 +14,32 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
     {
         services
-            .AddScoped(typeof(IModuleNameRepository<>), typeof(EfRepository<>))
-            .AddScoped(typeof(IModuleNameReadRepository<>), typeof(EfRepository<>))
-            .AddScoped<IPersonRepository, PersonRepository>();
-
-        services
-            .AddScoped<IUnitOfWork, EfUnitOfWork>();
-
-        services
-            .AddDbContext<ModuleNameDbContext>(ServiceLifetime.Scoped);
+            .AddPersistence(configuration, environment)
+            .AddServices(configuration, environment);
 
         // Injection de tous les handlers de l'application
         services
             .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
+
+        return services;
+    }
+
+    static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
+    {
+        services
+            .AddScoped(typeof(IModuleNameRepository<>), typeof(EfRepository<>))
+            .AddScoped(typeof(IModuleNameReadRepository<>), typeof(EfRepository<>))
+            .AddScoped<IPersonRepository, PersonRepository>()
+            .AddScoped<IUnitOfWork, EfUnitOfWork>()
+            .AddDbContext<ModuleNameDbContext>(ServiceLifetime.Scoped);
+
+        return services;
+    }
+
+    static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
+    {
+        //services
+        //    .AddScoped<IExternalService, ExternalService>();
 
         return services;
     }
