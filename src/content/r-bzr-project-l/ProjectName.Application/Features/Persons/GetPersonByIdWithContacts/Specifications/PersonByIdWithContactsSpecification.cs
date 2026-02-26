@@ -1,4 +1,5 @@
-﻿using ProjectName.Domain.PersonAggregate;
+﻿using Ardalis.Specification;
+using ProjectName.Domain.PersonAggregate;
 
 namespace ProjectName.Application.Features.Persons.GetPersonByIdWithContacts.Specifications;
 

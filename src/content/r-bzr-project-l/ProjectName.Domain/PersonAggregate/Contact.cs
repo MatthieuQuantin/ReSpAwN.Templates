@@ -1,4 +1,5 @@
 ﻿using ProjectName.Domain.Commons;
+using ProjectName.Domain.PersonAggregate.Events;
 
 namespace ProjectName.Domain.PersonAggregate;
 

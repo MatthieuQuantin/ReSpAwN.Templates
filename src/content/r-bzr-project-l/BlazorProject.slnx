@@ -10,5 +10,6 @@
   <Project Path="ProjectName.Application/ProjectName.Application.csproj" Id="00e63df9-2652-4bbd-8a88-6b5479ae3793" />
   <Project Path="ProjectName.Domain.Contracts/ProjectName.Domain.Contracts.csproj" Id="6f53ff7d-25ca-4257-bd30-11e23a5ccbb0" />
   <Project Path="ProjectName.Domain/ProjectName.Domain.csproj" Id="893cf235-76e0-478a-8770-3cf389c6541b" />
+  <Project Path="ProjectName.Infrastructure/ProjectName.Infrastructure.csproj" Id="20aa359c-f73c-48bf-9058-0709f8f60524" />
   <Project Path="ProjectName.SharedKernel/ProjectName.SharedKernel.csproj" Id="5671ad3d-190f-4c6d-87ac-c21448f812a4" />
 </Solution>
