@@ -1,0 +1,9 @@
+﻿namespace ProjectName.Application.Features.Persons.DeletePerson;
+
+internal sealed class DeletePersonCommandValidator : AbstractValidator<DeletePersonCommand>
+{
+    public DeletePersonCommandValidator()
+    {
+        RuleFor(x => x.PersonId).NotEmpty();
+    }
+}
