@@ -1,4 +1,4 @@
-﻿using ApplicationName.SharedKernel.Application.Persistence;
+﻿using ProjectName.SharedKernel.Application.Persistence;
 using ProjectName.Application.Persistence.Repositories;
 using ProjectName.Domain.PersonAggregate;
 

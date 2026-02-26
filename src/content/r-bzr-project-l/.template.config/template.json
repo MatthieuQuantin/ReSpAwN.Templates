@@ -3,9 +3,9 @@
   "author": "Matthieu QUANTIN",
   "identity": "ReSpAwN.BlazorProjectLarge.Template",
   "name": "Blazor project large (multi-project)",
-  "description": "Creates a modular Blazor building block with multiple projects, renaming 'ApplicationName' and regenerating project GUIDs.",
+  "description": "Creates a modular Blazor building block with multiple projects, renaming 'ProjectName' and regenerating project GUIDs.",
   "shortName": "r-bzr-project-l",
-  "sourceName": "ApplicationName",
+  "sourceName": "ProjectName",
   "defaultName": "MyProject",
   "preferNameDirectory": true,
 
@@ -73,24 +73,26 @@
   ],
 
   "guids": [
-    "9C014E55-1011-D534-F85F-15181D467A81",
-    "48339BAE-2665-4781-A2C1-AD51509E597B",
-    "D649730E-C383-466B-AED3-125A3FFBE2F0",
-    "641B9C5B-2DF1-461C-AB08-1D501BA833F5",
-    "7C91EF40-5F1C-4BEF-B9DD-85B8212E83CF",
-    "1DB68B0C-7756-4C06-94BA-624B1576B73F",
-    "9EA4FB7E-E64C-4913-8313-25D0BD7143E2",
-    "522DEA4F-0B82-4DC0-AF4D-C3258AA7B6DB"
+    "0c125a89-adbe-4b11-b86b-5d4f72ec1e18",
+    "00e63df9-2652-4bbd-8a88-6b5479ae3793",
+    "da4bde18-275d-4edf-8e19-d3e73f9ff4f6",
+    "6f53ff7d-25ca-4257-bd30-11e23a5ccbb0",
+    "893cf235-76e0-478a-8770-3cf389c6541b",
+    "20aa359c-f73c-48bf-9058-0709f8f60524",
+    "19cd247d-993f-4dcd-bed0-73d90aaab727",
+    "5671ad3d-190f-4c6d-87ac-c21448f812a4",
+    "2cb6ef8f-0c65-4b80-a414-4b6129bb9e2c"
   ],
 
   "primaryOutputs": [
-    { "path": "../commons/ApplicationName.SharedKernel/ApplicationName.SharedKernel.csproj" },
-    { "path": "ApplicationName.Application/ApplicationName.Application.csproj" },
-    { "path": "ApplicationName.Design/ApplicationName.Design.csproj" },
-    { "path": "ApplicationName.Domain/ApplicationName.Domain.csproj" },
-    { "path": "ApplicationName.Domain.Contracts/ApplicationName.Domain.Contracts.csproj" },
-    { "path": "ApplicationName.Infrastructure/ApplicationName.Infrastructure.csproj" },
-    { "path": "ApplicationName.Presentation/ApplicationName.Presentation.csproj" },
-    { "path": "ApplicationName.Tests/ApplicationName.Tests.csproj" }
+    { "path": "ProjectName.Application.Contracts/ProjectName.Application.Contracts.csproj" },
+    { "path": "ProjectName.Application/ProjectName.Application.csproj" },
+    { "path": "ProjectName.Design/ProjectName.Design.csproj" },
+    { "path": "ProjectName.Domain.Contracts/ProjectName.Domain.Contracts.csproj" },
+    { "path": "ProjectName.Domain/ProjectName.Domain.csproj" },
+    { "path": "ProjectName.Infrastructure/ProjectName.Infrastructure.csproj" },
+    { "path": "ProjectName.Presentation/ProjectName.Presentation.csproj" },
+    { "path": "ProjectName.SharedKernel/ProjectName.SharedKernel.csproj" },
+    { "path": "ProjectName.Tests/ProjectName.Tests.csproj" }
   ]
 }

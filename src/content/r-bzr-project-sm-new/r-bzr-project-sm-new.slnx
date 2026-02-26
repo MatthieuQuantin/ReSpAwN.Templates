@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="ProjectName.Shared/ProjectName.Shared.csproj" Id="f4b0470c-e006-4eab-a3e6-c24e3cb533c7" />
+  <Project Path="ProjectName.SharedKernel/ProjectName.SharedKernel.csproj" />
+  <Project Path="ProjectName/ProjectName.csproj" Id="63d6f1de-e0f6-4439-866d-f96f07477ded" />
+</Solution>
