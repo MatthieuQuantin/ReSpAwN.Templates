@@ -2,3 +2,4 @@
 global using Ardalis.Result.FluentValidation;
 global using FluentValidation;
 global using Microsoft.Extensions.Logging;
+global using ProjectName.SharedKernel.Application;
