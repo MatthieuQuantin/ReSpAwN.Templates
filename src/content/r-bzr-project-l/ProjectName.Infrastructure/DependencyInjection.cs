@@ -1,11 +1,13 @@
-﻿using ProjectName.SharedKernel.Application.Persistence;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ProjectName.Application.Persistence.Repositories;
+using ProjectName.Application.Services;
 using ProjectName.Infrastructure.Persistence;
 using ProjectName.Infrastructure.Persistence.Repositories;
 using ProjectName.Infrastructure.Persistence.Repositories.Base;
+using ProjectName.Infrastructure.Services;
+using ProjectName.SharedKernel.Application.Persistence;
 
 namespace ProjectName.Infrastructure;
 
@@ -38,8 +40,8 @@ public static class DependencyInjection
 
     static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
     {
-        //services
-        //    .AddScoped<IExternalService, ExternalService>();
+        services
+            .AddScoped<IExternalService, ExternalService>();
 
         return services;
     }
