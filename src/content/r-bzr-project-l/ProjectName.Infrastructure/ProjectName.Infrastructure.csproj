@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectName.Application\ProjectName.Application.csproj" />
-    <ProjectReference Include="..\ProjectName.SharedKernel\ProjectName.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>
